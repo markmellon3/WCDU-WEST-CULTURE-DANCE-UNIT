@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEST CULTURE DANCE UNIT - Gallery</title>
+    <title>WEST CULTURE DANCE UNITE - Gallery</title>
     <!-- Favicon -->
-<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
 
-<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -216,6 +215,7 @@
             padding: 2rem 1.5rem;
             opacity: 0;
             transition: opacity 0.4s ease;
+            pointer-events: none;
         }
 
         .gallery-item:hover .overlay {
@@ -231,6 +231,57 @@
         .overlay p {
             font-size: 1rem;
             color: #ddd;
+        }
+
+        /* ── Improved Video Player ── */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #111;
+            cursor: pointer;
+        }
+
+        .gallery-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .play-btn {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s ease;
+            z-index: 10;
+        }
+
+        .play-btn::before {
+            content: "▶";
+            font-size: 4.8rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+            transition: transform 0.25s ease;
+        }
+
+        .gallery-video.playing + .play-btn {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.15);
+        }
+
+        .video-wrapper:hover .play-btn {
+            background: rgba(255,64,129,0.28);
+        }
+
+        .video-wrapper:hover .play-btn::before {
+            transform: scale(1.15);
         }
 
         /* ── Footer ── */
@@ -281,6 +332,10 @@
 
             .gallery-grid {
                 gap: 1.4rem;
+            }
+
+            .play-btn::before {
+                font-size: 3.8rem;
             }
         }
 
@@ -381,12 +436,27 @@
                     item.type === 'video' ||
                     /\.(mp4|webm|ogg)$/i.test(url);
 
-                const mediaHTML = isVideo 
-                    ? `<video controls preload="metadata" loop muted playsinline>
-                         <source src="${url}" type="video/mp4">
-                         Your browser does not support video.
-                       </video>`
-                    : `<img src="${url}" alt="${title}" loading="lazy">`;
+                let mediaHTML = '';
+
+                if (isVideo) {
+                    mediaHTML = `
+                        <div class="video-wrapper">
+                            <video 
+                                class="gallery-video" 
+                                preload="metadata" 
+                                loop 
+                                muted 
+                                playsinline
+                            >
+                                <source src="${url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <button class="play-btn" aria-label="Play/Pause video"></button>
+                        </div>
+                    `;
+                } else {
+                    mediaHTML = `<img src="${url}" alt="${title}" loading="lazy">`;
+                }
 
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
@@ -403,10 +473,6 @@
         });
     </script>
 
-    <footer>
-        <p>© 2026 WEST CULTURE DANCE UNIT — All Rights Reserved</p>
-    </footer>
-
     <script>
         // Mobile menu toggle
         const mobileMenu = document.getElementById('mobile-menu');
@@ -418,8 +484,30 @@
                 mobileMenu.classList.toggle('active');
             });
         }
+
+        // Video play/pause on click anywhere in wrapper
+        document.addEventListener('click', function(e) {
+            const wrapper = e.target.closest('.video-wrapper');
+            if (!wrapper) return;
+
+            const video = wrapper.querySelector('.gallery-video');
+            if (!video) return;
+
+            e.preventDefault(); // prevent bubbling issues
+
+            if (video.paused || video.ended) {
+                video.play().catch(() => {});
+                video.classList.add('playing');
+            } else {
+                video.pause();
+                video.classList.remove('playing');
+            }
+        });
     </script>
 
-</body>
+    <footer>
+        <p>© 2026 WEST CULTURE DANCE UNITE — All Rights Reserved</p>
+    </footer>
 
+</body>
 </html>
