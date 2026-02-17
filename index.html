@@ -303,7 +303,8 @@
                 height: 140px;
             }
         }
-        .about-section {
+       
+.about-section {
   padding: 100px 5%;
   background: #0a0a0a;
 }
@@ -321,13 +322,6 @@
   justify-content: center;
 }
 
-.about-flame {
-  flex: 0 0 220px;
-  text-align: center;
-}
-
-
-
 .about-text {
   flex: 1;
   min-width: 320px;
@@ -337,25 +331,27 @@
   font-size: 1.15rem;
   margin-bottom: 1.5rem;
   color: #ddd;
+  line-height: 1.7;
 }
 
 .about-text h3 {
   color: #ff4081;
   margin: 2.5rem 0 1.2rem;
   font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .about-text ul {
   list-style: none;
-  margin: 1.5rem 0;
-  padding-left: 1.8rem;
+  margin: 1.5rem 0 2.5rem;
+  padding-left: 0;
 }
 
 .about-text ul li {
-  margin-bottom: 0.9rem;
+  margin-bottom: 1rem;
   font-size: 1.1rem;
   position: relative;
-  padding-left: 1.8rem;
+  padding-left: 2.2rem;
 }
 
 .about-text ul li::before {
@@ -364,29 +360,55 @@
   position: absolute;
   left: 0;
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
 .support-ways li::before {
   content: "•";
+  font-size: 1.6rem;
+  line-height: 1;
 }
 
 .closing {
   font-size: 1.25rem;
   font-weight: 500;
   color: #ffddcc;
-  margin-top: 2rem;
+  margin-top: 2.5rem;
   text-align: center;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
   .about-content {
     flex-direction: column;
     text-align: center;
+    gap: 3rem;
   }
-  .about-flame {
-    margin-bottom: 2rem;
+
+  .about-text {
+    text-align: left;
+  }
+
+  .about-text h3 {
+    font-size: 1.6rem;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
   }
 }
+
+@media (max-width: 480px) {
+  .about-section {
+    padding: 60px 5%;
+  }
+
+  .about-text ul li {
+    padding-left: 2rem;
+    font-size: 1rem;
+  }
+}
+
     </style>
 </head>
 <body>
@@ -515,5 +537,6 @@
 </body>
 
 </html>
+
 
 
