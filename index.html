@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEST CULTURE DANCE UNIT</title>
+    
     <!-- Favicon -->
-<link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="any" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
 
-<link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
     <style>
+        :root {
+            --primary: #ff4081;
+            --accent: #ff6b00;
+            --purple: #9c27b0;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -23,124 +30,131 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #0d0d0d;
+            font-family: 'Inter', system-ui, sans-serif;
             color: #f0f0f0;
+            background: #0a0a0a;
             overflow-x: hidden;
+        }
+
+        /* ==================== FULL BACKGROUND WALLPAPER ==================== */
+        .page-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)),
+                        url('https://ik.imagekit.io/s95tumxuk/WhatsApp%20Image%202026-02-16%20at%2020.33.27.jpeg') center/cover no-repeat fixed;
+            z-index: -1;
+            filter: brightness(0.85);
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
 
         /* Navigation */
         header {
-            background: rgba(10, 10, 10, 0.9);
-            padding: 15px 5%;
             position: fixed;
-            width: 100%;
             top: 0;
+            width: 100%;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
+            padding: 18px 5%;
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,64,129,0.25);
         }
 
         nav {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff4081;
-            letter-spacing: 2px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 33px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff4081, #ff6b00, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 30px;
+            gap: 38px;
         }
 
-        .nav-links li a {
+        .nav-links a {
             color: #fff;
             text-decoration: none;
-            font-size: 16px;
+            font-weight: 500;
             position: relative;
-            transition: color 0.3s;
         }
 
-        .nav-links li a::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -6px;
+            bottom: -5px;
             left: 0;
-            background-color: #ff4081;
+            width: 0;
+            height: 2.5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
             transition: width 0.4s ease;
         }
 
-        .nav-links li a:hover::after,
-        .nav-links li a.active::after {
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
             width: 100%;
         }
 
-        .nav-links li a:hover {
-            color: #ff4081;
-        }
-
-        /* Mobile Menu */
         .menu-toggle {
             display: none;
             flex-direction: column;
+            gap: 6px;
             cursor: pointer;
         }
 
         .menu-toggle .bar {
-            width: 28px;
+            width: 32px;
             height: 3px;
-            background: #fff;
-            margin: 5px 0;
+            background: white;
             transition: 0.4s;
         }
 
-        /* Hero Section */
+        /* HERO */
         .hero {
             height: 100vh;
-            min-height: 700px;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)),
-                        url('https://ik.imagekit.io/s95tumxuk/WhatsApp%20Image%202026-02-16%20at%2020.33.27.jpeg') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
         .hero-content {
-            max-width: 900px;
+            max-width: 920px;
             padding: 0 20px;
-            opacity: 0;
-            transform: translateY(40px);
-            animation: fadeUp 1.2s forwards 0.3s;
-        }
-
-        @keyframes fadeUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            z-index: 2;
         }
 
         .flame-logo {
-            width: 180px;
-            height: 180px;
+            width: 210px;
+            height: 210px;
             border-radius: 50%;
             overflow: hidden;
             margin: 0 auto 30px;
-            box-shadow: 0 0 40px rgba(255, 64, 129, 0.6);
-            animation: pulseGlow 4s infinite alternate;
-            border: 3px solid rgba(255, 64, 129, 0.4);
+            border: 8px solid rgba(255,255,255,0.25);
+            box-shadow: 0 0 90px rgba(255,64,129,0.85);
+            animation: flameFloat 5.5s infinite ease-in-out;
         }
 
         .flame-logo img {
@@ -149,92 +163,81 @@
             object-fit: cover;
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 20px rgba(255, 64, 129, 0.4); }
-            100% { box-shadow: 0 0 60px rgba(255, 64, 129, 0.9); }
+        @keyframes flameFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(7deg); }
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 7vw, 4.8rem);   /* Reduced max size so it fits better */
-            line-height: 1.1;
-            margin-bottom: 25px;
-            color: #fff;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.7);
-            animation: textPop 1.5s ease-out;
-            word-break: break-word;
-        }
-
-        @keyframes textPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            60% { transform: scale(1.05); }
-            100% { transform: scale(1); opacity: 1; }
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 9vw, 6rem);
+            line-height: 1.05;
+            margin-bottom: 22px;
+            background: linear-gradient(90deg, #ffffff, #ff4081, #ff6b00, #9c27b0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
-            font-size: clamp(1.2rem, 4vw, 1.6rem);
-            margin-bottom: 40px;
-            opacity: 0.9;
-            animation: fadeIn 2s forwards 0.8s;
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 0.9; }
+            font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+            margin-bottom: 45px;
+            opacity: 0.93;
         }
 
         .hero-btn {
-            background: #ff4081;
-            color: white;
-            padding: 16px 40px;
-            font-size: 1.2rem;
-            text-decoration: none;
+            padding: 18px 55px;
+            font-size: 1.3rem;
+            font-weight: 600;
             border-radius: 50px;
+            background: rgba(255,255,255,0.12);
+            border: 2px solid rgba(255,64,129,0.7);
+            color: white;
+            text-decoration: none;
             display: inline-block;
+            backdrop-filter: blur(12px);
             transition: all 0.4s ease;
-            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.5);
-            animation: fadeIn 2s forwards 1.2s;
-            opacity: 0;
         }
 
         .hero-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            background: #e91e63;
-            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.7);
+            background: linear-gradient(90deg, #ff4081, #ff6b00);
+            border-color: transparent;
+            transform: scale(1.08);
         }
 
-        /* Sections */
+        /* SECTIONS - All with background wallpaper visible */
         section {
-            padding: 100px 5%;
-            text-align: center;
+            padding: 130px 5% 110px;
+            position: relative;
         }
 
         h2 {
-            font-size: 3rem;
-            margin-bottom: 40px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 6vw, 3.4rem);
+            text-align: center;
+            margin-bottom: 70px;
             color: #ff4081;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
         }
 
-        section.visible h2 {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .about-content {
+        /* About */
+        .about-glass {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 65px 50px;
+            border-radius: 37px;
             display: flex;
-            flex-direction: column;
+            gap: 65px;
             align-items: center;
-            gap: 40px;
+            flex-wrap: wrap;
         }
 
         .about-flame {
-            width: 160px;
-            height: 160px;
+            width: 300px;
+            height: 270px;
             border-radius: 50%;
             overflow: hidden;
-            box-shadow: 0 0 35px rgba(255, 64, 129, 0.5);
-            border: 3px solid rgba(255, 64, 129, 0.3);
+            border: 15px solid rgba(255,64,129,0.35);
+            box-shadow: 0 0 80px rgba(255,64,129,0.7);
+            flex-shrink: 0;
         }
 
         .about-flame img {
@@ -243,185 +246,204 @@
             object-fit: cover;
         }
 
-        p {
-            max-width: 900px;
-            margin: 0 auto 30px;
-            font-size: 1.2rem;
-            line-height: 1.7;
-            opacity: 0.85;
+        .about-text {
+            flex: 1;
+            min-width: 20px;
         }
 
-        /* Footer */
+        .about-text p {
+            font-size: 1.18rem;
+            line-height: 1.8;
+            margin-bottom: 1.6rem;
+        }
+
+        .about-text h3 {
+            color: #ff4081;
+            margin: 2.6rem 0 1.3rem;
+            font-size: 1.85rem;
+        }
+
+        /* Events */
+        .events-section {
+            padding-top: 100px;
+        }
+
+        #events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            border-radius: 30px;
+            overflow: hidden;
+            transition: transform 0.5s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-12px);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+        }
+
+        .event-body {
+            padding: 28px;
+        }
+
+        .event-date {
+            background: rgba(255,64,129,0.22);
+            color: #ff4081;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        /* Contact */
+        .contact-glass {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 65px 50px;
+            border-radius: 34px;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 18px 26px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,64,129,0.45);
+            border-radius: 18px;
+            color: white;
+            font-size: 1.08rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff4081;
+            box-shadow: 0 0 0 4px rgba(255,64,129,0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.35rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 18px;
+            background: linear-gradient(90deg, #ff4081, #ff6b00, #9c27b0);
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .submit-btn:hover {
+            transform: scale(1.05);
+        }
+
         footer {
-            background: #000;
-            padding: 40px 5%;
+            background: rgba(0,0,0,0.85);
+            padding: 70px 5% 50px;
             text-align: center;
-            color: #888;
+            color: #777;
+            border-top: 1px solid rgba(255,64,129,0.25);
+            position: relative;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 78px;
                 left: 0;
                 width: 100%;
-                background: rgba(10,10,10,0.95);
+                background: rgba(10,10,10,0.98);
                 flex-direction: column;
-                padding: 30px 0;
+                padding: 40px 0;
                 text-align: center;
+                z-index: 999;
             }
+            .nav-links.active { display: flex; }
 
-            .nav-links.active {
-                display: flex;
-            }
+            .menu-toggle { display: flex; }
 
-            .nav-links li {
-                margin: 20px 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .flame-logo {
-                width: 140px;
-                height: 140px;
-            }
-
-            .hero h1 {
-                font-size: 2.8rem;
-            }
-
-            .hero p {
-                font-size: 1.3rem;
+            .about-glass {
+                flex-direction: column;
+                text-align: center;
+                padding: 50px 30px;
+                gap: 40px;
             }
 
             .about-flame {
-                width: 140px;
-                height: 140px;
+                width: 220px;
+                height: 220px;
+            }
+
+            #events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 100px 5% 90px;
             }
         }
-       
-.about-section {
-  padding: 100px 5%;
-  background: #0a0a0a;
-}
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.about-content {
-  display: flex;
-  align-items: center;
-  gap: 4rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.about-text {
-  flex: 1;
-  min-width: 320px;
-}
-
-.about-text p {
-  font-size: 1.15rem;
-  margin-bottom: 1.5rem;
-  color: #ddd;
-  line-height: 1.7;
-}
-
-.about-text h3 {
-  color: #ff4081;
-  margin: 2.5rem 0 1.2rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-}
-
-.about-text ul {
-  list-style: none;
-  margin: 1.5rem 0 2.5rem;
-  padding-left: 0;
-}
-
-.about-text ul li {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-  position: relative;
-  padding-left: 2.2rem;
-}
-
-.about-text ul li::before {
-  content: "→";
-  color: #ff4081;
-  position: absolute;
-  left: 0;
-  font-weight: bold;
-  font-size: 1.3rem;
-}
-
-.support-ways li::before {
-  content: "•";
-  font-size: 1.6rem;
-  line-height: 1;
-}
-
-.closing {
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #ffddcc;
-  margin-top: 2.5rem;
-  text-align: center;
-  line-height: 1.6;
-}
-
-@media (max-width: 768px) {
-  .about-content {
-    flex-direction: column;
-    text-align: center;
-    gap: 3rem;
-  }
-
-  .about-text {
-    text-align: left;
-  }
-
-  .about-text h3 {
-    font-size: 1.6rem;
-  }
-
-  .about-text p {
-    font-size: 1.05rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .about-section {
-    padding: 60px 5%;
-  }
-
-  .about-text ul li {
-    padding-left: 2rem;
-    font-size: 1rem;
-  }
-}
-
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .flame-logo {
+                width: 170px;
+                height: 170px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Navigation -->
+    <!-- FULL BACKGROUND WALLPAPER -->
+    <div class="page-bg"></div>
+
+    <!-- NAV -->
     <header>
         <nav>
             <div class="logo">WCDU</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="active">Home</a></li>
                 <li><a href="#about">About</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="#events">Events</a></li>
+                <li><a href="#contact">Message</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="Donation.html">Donation</a></li>
             </ul>
             <div class="menu-toggle" id="mobile-menu">
@@ -432,111 +454,221 @@
         </nav>
     </header>
 
-    <!-- Hero Section with Circular Flame Logo -->
+    <!-- HERO -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <!-- Circular Flame Logo -->
-            <div class="flame-logo">
-                <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" alt="Flame Logo">
-                <!-- Replace the src above with your downloaded flame logo PNG (transparent background recommended) -->
+            <div class="flame-logo glass">
+                <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" alt="WCDU Flame Logo">
             </div>
-
-            <h1>WEST CULTURE DANCE UNIT</h1>
+            <h1>WEST CULTURE<br>DANCE UNIT</h1>
             <p>Join the most electrifying dance crew — where movement meets fire.</p>
-            <a href="#about" class="hero-btn">Discover More</a>
+            <a href="#about" class="hero-btn glass">Discover More</a>
         </div>
     </section>
 
-    <!-- Example Sections (with scroll animation) -->
-   <section id="about" class="about-section">
-  <div class="container">
-    <h2>About Us</h2>
+    <!-- ABOUT -->
+    <section id="about">
+        <div class="about-glass glass fade-in">
+            <div class="about-flame">
+                <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" alt="WCDU Flame Symbol">
+            </div>
+            <div class="about-text">
+                <p>We are a high-energy dance collective based in Kampala, specializing in hip-hop, contemporary fusion, and street styles. Our mission is to inspire, create, and perform with unmatched intensity and passion.</p>
+                <p>At <strong>WEST CULTURE DANCE UNIT</strong>, donations are at the heart of what we do. We don’t just collect support — we actively distribute it to create real, lasting change in our communities across Kampala, the Central Region, and surrounding areas.</p>
+                
+                <h3>What we do through your donations:</h3>
+                <ul>
+                    <li>Provide food packages and groceries to vulnerable families and elderly people</li>
+                    <li>Supply school materials, uniforms, and fees to help children stay in education</li>
+                    <li>Offer clothing, blankets, and hygiene items during tough seasons</li>
+                    <li>Support medical needs — medicines, hospital bills, and emergency care for the sick</li>
+                    <li>Assist orphans, single mothers, and low-income households with urgent aid</li>
+                </ul>
 
-    <div class="about-content">
-      <div class="about-flame">
-        <img 
-          src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" 
-          alt="WCDU Flame Symbol"
-          loading="lazy"
-        >
-      </div>
+                <h3>Your support truly matters!</h3>
+                <p>Whether through cash contributions, in-kind donations, volunteering, or spreading the word.</p>
+                
+                <p style="font-style:italic; color:#ffddcc; margin-top:35px;">
+                    Every bit helps someone smile, eat, learn, stay warm, or heal. Thank you for believing in us.
+                </p>
+            </div>
+        </div>
+    </section>
 
-      <div class="about-text">
-        <p>
-          We are a high-energy dance collective based in Kampala, specializing in hip-hop, contemporary fusion, and street styles. 
-          Our mission is to inspire, create, and perform with unmatched intensity and passion.
-        </p>
+    <!-- EVENTS -->
+    <section id="events" class="events-section">
+        <h2 class="fade-in">Upcoming Events</h2>
+        <div id="events-grid" class="fade-in">
+            <!-- Populated by Firebase -->
+        </div>
+    </section>
 
-        <p>
-          At <strong>WEST CULTURE DANCE UNIT</strong>, donations are at the heart of what we do. 
-          We don’t just collect support — we actively distribute it to create real, lasting change in our communities across Kampala, 
-          the Central Region, and surrounding areas.
-        </p>
+    <!-- SEND MESSAGE -->
+    <section id="contact" class="contact-section">
+        <div class="contact-glass glass fade-in">
+            <h2 style="margin-bottom:45px; text-align:center;">Send Us a Message</h2>
+            <form id="message-form">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="name" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label>Email or Phone</label>
+                    <input type="text" id="contact-info" required placeholder="Your contact">
+                </div>
+                <div class="form-group">
+                    <label>Your Message</label>
+                    <textarea id="message" rows="5" required placeholder="Write your message here..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">SEND MESSAGE 🔥</button>
+                <div id="form-status" style="margin-top:25px; text-align:center; min-height:28px; font-weight:500;"></div>
+            </form>
+        </div>
+    </section>
 
-        <h3>What we do through your donations:</h3>
-        <ul>
-          <li>Provide food packages and groceries to vulnerable families and elderly people</li>
-          <li>Supply school materials, uniforms, and fees to help children stay in education</li>
-          <li>Offer clothing, blankets, and hygiene items during tough seasons</li>
-          <li>Support medical needs — medicines, hospital bills, and emergency care for the sick</li>
-          <li>Assist orphans, single mothers, and low-income households with urgent aid</li>
-        </ul>
-
-        <p>
-          We carry out these donations regularly — through monthly drives, special holiday distributions, 
-          and immediate responses during crises. Everything is done transparently: we share photos and videos of deliveries 
-          (with privacy respected), receipts where possible, and real stories of impact.
-        </p>
-
-        <h3>Your support truly matters!</h3>
-        <p>Whether through:</p>
-        <ul class="support-ways">
-          <li>Cash contributions (mobile money, bank transfer, etc.)</li>
-          <li>In-kind donations (food, clothes, books, school supplies, etc.)</li>
-          <li>Volunteering your time to help pack or distribute</li>
-          <li>Spreading the word to friends, family, and your community</li>
-        </ul>
-
-        <p class="closing">
-          Every bit helps someone smile, eat, learn, stay warm, or heal. Thank you for believing in us and helping keep the culture — and hope — alive.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
+    <!-- FOOTER -->
     <footer>
         <p>© 2026 WEST CULTURE DANCE UNIT — Burn Bright</p>
     </footer>
 
-    <!-- JavaScript: Mobile Menu + Scroll Animations -->
     <script>
-        // Mobile Menu Toggle
-        const mobileMenu = document.getElementById('mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
+        // Firebase Config - Replace with your own
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBmEy3DcuhuSsPxQml332xalyQJVWLd4uw",
+  authDomain: "wcdu-955cb.firebaseapp.com",
+  databaseURL: "https://wcdu-955cb-default-rtdb.firebaseio.com",
+  projectId: "wcdu-955cb",
+  storageBucket: "wcdu-955cb.firebasestorage.app",
+  messagingSenderId: "381070884807",
+  appId: "1:381070884807:web:e02f4e3e3e34399f50e3e2",
+  measurementId: "G-2DXFQ992WK"
+};
 
-        mobileMenu.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        });
+        let db;
 
-        // Scroll Reveal for section headings
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
+        function initFirebase() {
+            try {
+                const app = firebase.initializeApp(firebaseConfig);
+                db = firebase.database(app);
+            } catch(e) {
+                console.warn("Firebase not configured");
+            }
+        }
+
+        function loadEvents() {
+            const grid = document.getElementById('events-grid');
+            if (!db) {
+                grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#ddd;padding:60px;">Add your Firebase config to see live events.</p>`;
+                return;
+            }
+
+            db.ref('events').on('value', (snap) => {
+                grid.innerHTML = '';
+                const data = snap.val();
+                if (!data) {
+                    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#ddd;padding:80px;">No upcoming events yet. Stay tuned! 🔥</p>`;
+                    return;
+                }
+
+                const events = Array.isArray(data) ? data : Object.values(data);
+                events.forEach(ev => {
+                    const card = document.createElement('div');
+                    card.className = 'event-card glass fade-in';
+                    card.innerHTML = `
+                        <img src="${ev.imageUrl || 'https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png'}" alt="${ev.title}">
+                        <div class="event-body">
+                            <div class="event-date">${new Date(ev.date).toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})}</div>
+                            <h3 style="margin:12px 0 10px;">${ev.title}</h3>
+                            <p style="color:#ccc;">${ev.description || 'Get ready to dance!'}</p>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            });
+        }
+
+        function initForm() {
+            const form = document.getElementById('message-form');
+            const status = document.getElementById('form-status');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (!db) {
+                    status.innerHTML = `<span style="color:#ff6b00">Firebase not connected.</span>`;
+                    return;
+                }
+
+                const name = document.getElementById('name').value.trim();
+                const contact = document.getElementById('contact-info').value.trim();
+                const msg = document.getElementById('message').value.trim();
+
+                status.innerHTML = `<span style="color:#ff4081">Sending...</span>`;
+
+                db.ref('messages').push({
+                    name, contact, message: msg,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                }).then(() => {
+                    status.innerHTML = `<span style="color:#9c27b0">✅ Message sent! The crew will reply soon 🔥</span>`;
+                    form.reset();
+                    setTimeout(() => status.innerHTML = '', 5000);
+                }).catch(() => {
+                    status.innerHTML = `<span style="color:#ff4081">Failed to send. Try again.</span>`;
+                });
+            });
+        }
+
+        function initUI() {
+            // Fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.15 });
+
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // Mobile Menu
+            const mobileBtn = document.getElementById('mobile-menu');
+            const navList = document.getElementById('nav-links');
+
+            mobileBtn.addEventListener('click', () => {
+                navList.classList.toggle('active');
+                const bars = mobileBtn.querySelectorAll('.bar');
+                if (navList.classList.contains('active')) {
+                    bars[0].style.transform = 'rotate(45deg) translate(6px,6px)';
+                    bars[1].style.opacity = '0';
+                    bars[2].style.transform = 'rotate(-45deg) translate(5px,-5px)';
+                } else {
+                    bars.forEach(b => { b.style.transform = ''; b.style.opacity = '1'; });
                 }
             });
-        }, { threshold: 0.2 });
 
-        document.querySelectorAll('section h2').forEach(h2 => {
-            observer.observe(h2.parentElement);
-        });
+            // Active navigation
+            window.addEventListener('scroll', () => {
+                const sections = document.querySelectorAll('section');
+                const links = document.querySelectorAll('.nav-links a');
+                let current = 'home';
+
+                sections.forEach(sec => {
+                    if (window.scrollY >= sec.offsetTop - 180) current = sec.getAttribute('id');
+                });
+
+                links.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+                });
+            });
+        }
+
+        // Initialize
+        window.onload = () => {
+            initFirebase();
+            loadEvents();
+            initForm();
+            initUI();
+            console.log("%cWCDU - Full Background Wallpaper + Fully Responsive", "color:#ff4081;font-weight:bold");
+        };
     </script>
-
 </body>
-
 </html>
-
-
-
