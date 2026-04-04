@@ -45,7 +45,7 @@
             height: 100%;
             background: 
                 linear-gradient(rgba(0,0,0,0.20), rgba(0,0,0,0.30)),
-                url('https://ik.imagekit.io/s95tumxuk/WhatsApp%20Image%202026-02-16%20at%2020.33.27.jpeg') center/cover no-repeat;
+                url('https://ik.imagekit.io/s95tumxuk/WhatsApp%20Image%202026-02-16%20at%2020.35.02.jpeg?updatedAt=1771274193319') center/cover no-repeat;
             z-index: -1;
             background-attachment: scroll;   /* Better for mobile */
         }
@@ -429,6 +429,292 @@
                 height: 170px;
             }
         }
+                /* ==================== FOOTER ==================== */
+        .footer-glass {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 45px 30px 40px;
+            border-radius: 28px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .footer-logo {
+            text-align: left;
+        }
+
+        .footer-logo p {
+            margin-top: 6px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,64,129,0.4);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-btn:hover {
+            background: linear-gradient(90deg, #ff4081, #ff6b00);
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            opacity: 0.75;
+            font-size: 0.9rem;
+        }
+
+        /* Smaller Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 480px;           /* Made smaller */
+            padding: 35px 30px;
+            border-radius: 24px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #ff4081;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: scale(1.15);
+        }
+
+        .modal h3 {
+            color: #ff4081;
+            margin-bottom: 20px;
+            font-size: 1.65rem;
+        }
+
+        .modal p, .modal li {
+            line-height: 1.7;
+            margin-bottom: 14px;
+            opacity: 0.94;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                text-align: center;
+            }
+            
+            .modal-content {
+                max-width: 92%;
+                padding: 30px 25px;
+            }
+        }
+                /* ==================== FOOTER ==================== */
+        .footer-glass {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 45px 30px 40px;
+            border-radius: 28px;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            text-align: left;
+        }
+
+        .footer-logo p {
+            margin-top: 6px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,64,129,0.4);
+            color: white;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .footer-btn:hover {
+            background: linear-gradient(90deg, #ff4081, #ff6b00);
+            transform: translateY(-2px);
+        }
+
+        .footer-copyright {
+            opacity: 0.75;
+            font-size: 0.9rem;
+        }
+
+        /* Sponsors Slider */
+        .sponsors-section {
+            margin-top: 35px;
+        }
+
+        .sponsors-section h4 {
+            color: #ff4081;
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .sponsors-slider {
+            overflow: hidden;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        .sponsors-track {
+            display: flex;
+            gap: 40px;
+            animation: slide 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        .sponsors-track img {
+            height: 55px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+            filter: brightness(1.1);
+        }
+
+        .sponsors-track img:hover {
+            opacity: 1;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Smaller Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 3000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 480px;
+            padding: 35px 30px;
+            border-radius: 24px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 22px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #ff4081;
+            transition: 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            transform: scale(1.15);
+        }
+
+        .modal h3 {
+            color: #ff4081;
+            margin-bottom: 20px;
+            font-size: 1.65rem;
+        }
+
+        .modal p, .modal li {
+            line-height: 1.7;
+            margin-bottom: 14px;
+            opacity: 0.94;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                text-align: center;
+            }
+            
+            .modal-content {
+                max-width: 92%;
+                padding: 30px 25px;
+            }
+
+            .sponsors-track img {
+                height: 48px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -528,10 +814,15 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
-    <footer>
-        <p>© 2026 WEST CULTURE DANCE UNIT — Burn Bright</p>
-    </footer>
+    
+    
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 
     <script>
                // Firebase Config - Updated
@@ -548,14 +839,12 @@
         
         let db;
 
-               function initFirebase() {
+        function initFirebase() {
             try {
                 const app = firebase.initializeApp(firebaseConfig);
                 db = firebase.database(app);
-                console.log("%c✅ Firebase connected successfully", "color:#9c27b0;font-weight:bold");
-            } catch (e) {
-                console.error("Firebase initialization error:", e);
-                db = null;
+            } catch(e) {
+                console.warn("Firebase not configured");
             }
         }
 
@@ -672,6 +961,133 @@
             initUI();
             console.log("%cWCDU - Full Background Wallpaper + Fully Responsive", "color:#ff4081;font-weight:bold");
         };
+                // Modal Functions
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const body = document.getElementById('modal-body');
+            
+            let content = '';
+            
+            if (type === 'contact') {
+                content = `
+                    <h3>Contact Us</h3>
+                    <p><strong>Email:</strong> wcdu.kampala@gmail.com</p>
+                    <p><strong>Phone:</strong> +256 700 123 456</p>
+                    <p><strong>Location:</strong> Kampala, Central Region, Uganda</p>
+                    <p>We reply within 24-48 hours. Feel free to reach out for collaborations, bookings, or inquiries.</p>
+                `;
+            }
+            else if (type === 'privacy') {
+                content = `
+                    <h3>Privacy Policy</h3>
+                    <p>Your privacy is important to us. We collect minimal personal information only when you send us a message through the contact form.</p>
+                    <p>We do not sell, share, or distribute your data to third parties. All messages are stored securely in our database and used solely for communication purposes.</p>
+                    <p>Last updated: April 2026</p>
+                `;
+            }
+            else if (type === 'supporters') {
+                content = `
+                    <h3>Our Supporters & Partners</h3>
+                    <p>Thank you to everyone who believes in our mission. Special thanks to:</p>
+                    <ul>
+                        <li>Local community leaders in Kampala</li>
+                        <li>Youth organizations across the Central Region</li>
+                        <li>Individual donors and volunteers</li>
+                        <li>Partners helping us distribute aid to vulnerable families</li>
+                    </ul>
+                    <p style="margin-top:25px; font-style:italic; color:#ffddcc;">
+                        Your support helps us keep the fire burning — both on the dance floor and in our communities.
+                    </p>
+                `;
+            }
+            
+            body.innerHTML = content;
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        // Close modal when clicking outside the content
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
     </script>
+    
+    
+           <!-- FOOTER -->
+    <footer>
+        <div class="footer-glass glass">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo">WCDU</span>
+                    <p>West Culture Dance Unit • Kampala</p>
+                </div>
+                
+                <div class="footer-links">
+                    <button onclick="showModal('contact')" class="footer-btn">Contact</button>
+                    <button onclick="showModal('privacy')" class="footer-btn">Privacy Policy</button>
+                    <button onclick="showModal('supporters')" class="footer-btn">Supporters</button>
+                </div>
+                
+                <div class="footer-copyright">
+                    <p>© 2026 WEST CULTURE DANCE UNIT — Burn Bright 🔥</p>
+                </div>
+            </div>
+            
+            <!-- Sponsors Sliding Section -->
+            <div class="sponsors-section">
+                <h4>Our Valued Supporters & Partners</h4>
+                <div class="sponsors-slider">
+                    <div class="sponsors-track">
+                        <!-- Clickable Sponsor Logos - Replace with real links and images -->
+                        <a href="https://example.com/sponsor1" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" alt="Sponsor 1">
+                        </a>
+                        <a href="https://example.com/sponsor2" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" alt="Sponsor 2">
+                        </a>
+                        <a href="https://example.com/sponsor3" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" alt="Sponsor 3">
+                        </a>
+                        <a href="https://example.com/sponsor4" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png?updatedAt=1770817091954" alt="Sponsor 4">
+                        </a>
+                        <a href="https://example.com/sponsor5" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png?updatedAt=1770817091954" alt="Sponsor 5">
+                        </a>
+                        
+                        <!-- Duplicate set for seamless infinite scrolling -->
+                        <a href="https://example.com/sponsor1" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png?updatedAt=1770817091954" alt="Sponsor 1">
+                        </a>
+                        <a href="https://example.com/sponsor2" target="_blank" rel="noopener noreferrer">
+                            <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png?updatedAt=1770817091954" alt="Sponsor 2">
+                        </a>
+                        <a href="https://example.com/sponsor3" target="_blank" rel="noopener noreferrer">
+                            <img src="https://via.placeholder.com/160x60/1a1a1a/ffffff?text=SPONSOR+3" alt="Sponsor 3">
+                        </a>
+                        <a href="https://example.com/sponsor4" target="_blank" rel="noopener noreferrer">
+                            <img src="https://via.placeholder.com/160x60/1a1a1a/ffffff?text=SPONSOR+4" alt="Sponsor 4">
+                        </a>
+                        <a href="https://example.com/sponsor5" target="_blank" rel="noopener noreferrer">
+                            <img src="https://via.placeholder.com/160x60/1a1a1a/ffffff?text=SPONSOR+5" alt="Sponsor 5">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-btn" onclick="closeModal()">×</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
 </body>
 </html>
