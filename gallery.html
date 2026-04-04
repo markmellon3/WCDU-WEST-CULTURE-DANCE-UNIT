@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WEST CULTURE DANCE UNITE - Gallery</title>
+    
     <!-- Favicon -->
     <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
     <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
@@ -22,22 +23,26 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #0d0d0d;
+            font-family: 'Inter', system-ui, sans-serif;
             color: #f0f0f0;
             line-height: 1.6;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.78), rgba(0,0,0,0.88)),
+                        url('https://i.ibb.co/XvRyP5z/Whats-App-Image-2026-02-16-at-20-34-12.jpg') center/cover fixed;
+            background-attachment: fixed;
         }
 
-        /* ── Header / Navigation ── */
+        /* Glass Header */
         header {
-            background: rgba(10, 10, 10, 0.92);
-            padding: 1rem 5%;
+            background: rgba(15, 15, 15, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 1.1rem 5%;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 64, 129, 0.08);
+            border-bottom: 1px solid rgba(255, 64, 129, 0.15);
         }
 
         nav {
@@ -49,24 +54,25 @@
         }
 
         .logo {
-            font-size: clamp(1.8rem, 5vw, 2.2rem);
-            font-weight: bold;
+            font-size: clamp(1.9rem, 5vw, 2.4rem);
+            font-weight: 700;
             color: #ff4081;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
         }
 
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 2.2rem;
+            gap: 2.4rem;
         }
 
         .nav-links li a {
             color: white;
             text-decoration: none;
             font-size: 1.05rem;
+            font-weight: 500;
             position: relative;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .nav-links li a::after {
@@ -104,92 +110,82 @@
             transition: all 0.4s;
         }
 
-        /* ── Hero Section ── */
+        /* Hero */
         .gallery-hero {
-            position: relative;
-            height: 70vh;
+            height: 75vh;
             min-height: 520px;
-            max-height: 85vh;
-            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            position: relative;
         }
 
-        .hero-bg {
+        .gallery-hero::before {
+            content: '';
             position: absolute;
             inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            z-index: 1;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.85));
-            z-index: 2;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.82));
         }
 
         .gallery-hero-content {
             position: relative;
-            z-index: 3;
-            max-width: 900px;
+            z-index: 2;
+            max-width: 920px;
             padding: 0 5%;
         }
 
         .gallery-hero h1 {
-            font-size: clamp(3.2rem, 8vw, 6rem);
+            font-size: clamp(3.4rem, 8vw, 6.2rem);
             font-weight: 900;
             color: white;
-            margin-bottom: 1.2rem;
-            text-shadow: 0 6px 20px rgba(0,0,0,0.7);
+            margin-bottom: 1.3rem;
         }
 
         .gallery-hero p {
-            font-size: clamp(1.2rem, 4vw, 1.5rem);
+            font-size: clamp(1.25rem, 4vw, 1.6rem);
             color: #e0e0e0;
-            max-width: 680px;
-            margin: 0 auto;
         }
 
-        /* ── Gallery Grid ── */
+        /* Gallery */
         .gallery {
-            padding: 9rem 5% 6rem;
+            padding: 10rem 5% 7rem;
             max-width: 1440px;
             margin: 0 auto;
         }
 
         .gallery h2 {
             text-align: center;
-            font-size: clamp(2.4rem, 6vw, 3.2rem);
+            font-size: clamp(2.5rem, 6vw, 3.4rem);
             color: #ff4081;
-            margin-bottom: 4rem;
+            margin-bottom: 5rem;
             font-weight: 700;
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.8rem;
         }
 
+        /* Glass Cards - Two per line on all screens */
         .gallery-item {
             position: relative;
             overflow: hidden;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.55);
-            aspect-ratio: 4 / 5;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55);
+            transition: all 0.5s ease;
+            aspect-ratio: 4 / 4.6;
             cursor: pointer;
-            transition: all 0.4s ease;
         }
 
         .gallery-item:hover {
-            transform: translateY(-8px) scale(1.04);
-            box-shadow: 0 20px 50px rgba(255, 64, 129, 0.35);
+            transform: translateY(-10px) scale(1.04);
+            box-shadow: 0 25px 60px rgba(255, 64, 129, 0.3);
         }
 
         .gallery-item img,
@@ -197,22 +193,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.7s ease;
+            transition: transform 0.8s ease;
         }
 
         .gallery-item:hover img,
         .gallery-item:hover video {
-            transform: scale(1.14);
+            transform: scale(1.12);
         }
 
         .overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 60%);
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 25%, transparent 65%);
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 2rem 1.5rem;
+            padding: 2rem 1.6rem;
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
@@ -223,30 +219,21 @@
         }
 
         .overlay h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.6rem;
+            font-size: 1.55rem;
             color: #ff4081;
+            margin-bottom: 0.4rem;
         }
 
         .overlay p {
-            font-size: 1rem;
+            font-size: 1.02rem;
             color: #ddd;
         }
 
-        /* ── Improved Video Player ── */
+        /* Video Play Button */
         .video-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
-            background: #111;
-            cursor: pointer;
-        }
-
-        .gallery-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
 
         .play-btn {
@@ -254,50 +241,99 @@
             inset: 0;
             background: rgba(0,0,0,0.4);
             border: none;
-            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.35s ease;
             z-index: 10;
+            transition: all 0.3s;
         }
 
         .play-btn::before {
             content: "▶";
             font-size: 4.8rem;
-            color: #fff;
-            text-shadow: 0 0 20px rgba(0,0,0,0.8);
-            transition: transform 0.25s ease;
-        }
-
-        .gallery-video.playing + .play-btn {
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(1.15);
+            color: white;
         }
 
         .video-wrapper:hover .play-btn {
-            background: rgba(255,64,129,0.28);
+            background: rgba(255,64,129,0.25);
         }
 
-        .video-wrapper:hover .play-btn::before {
-            transform: scale(1.15);
+        /* Lightbox / Popup */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
         }
 
-        /* ── Footer ── */
-        footer {
-            background: #000;
-            padding: 3rem 5%;
-            text-align: center;
-            color: #777;
-            border-top: 1px solid #222;
-            font-size: 0.95rem;
+        .lightbox-content {
+            position: relative;
+            max-width: 95%;
+            max-height: 92vh;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
         }
 
-        /* ── Mobile ── */
+        .lightbox-media {
+            width: 100%;
+            max-height: 78vh;
+            object-fit: contain;
+        }
+
+        .lightbox-info {
+            padding: 1.8rem 2rem;
+            color: white;
+        }
+
+        .lightbox-info h3 {
+            font-size: 1.8rem;
+            color: #ff4081;
+            margin-bottom: 0.6rem;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 2010;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Mobile */
         @media (max-width: 768px) {
-            header {
-                padding: 1rem 6%;
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr); /* Two cards per line on mobile */
+                gap: 1.4rem;
+            }
+
+            .gallery-item {
+                aspect-ratio: 4 / 4.8;
+            }
+
+            .menu-toggle {
+                display: flex;
             }
 
             .nav-links {
@@ -317,34 +353,8 @@
                 display: flex;
             }
 
-            .menu-toggle {
-                display: flex;
-            }
-
-            .gallery-hero {
-                min-height: 55vh;
-                max-height: 75vh;
-            }
-
-            .gallery {
-                padding: 7rem 6% 4rem;
-            }
-
-            .gallery-grid {
-                gap: 1.4rem;
-            }
-
-            .play-btn::before {
-                font-size: 3.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .gallery-hero h1 {
-                font-size: clamp(2.4rem, 9vw, 3.8rem);
-            }
-            .gallery h2 {
-                font-size: 2.1rem;
+            .lightbox-content {
+                max-width: 98%;
             }
         }
     </style>
@@ -370,12 +380,6 @@
     </header>
 
     <section class="gallery-hero">
-        <img 
-            src="https://i.ibb.co/XvRyP5z/Whats-App-Image-2026-02-16-at-20-34-12.jpg" 
-            alt="WCDU Dance Crew Performance" 
-            class="hero-bg"
-        >
-        <div class="hero-overlay"></div>
         <div class="gallery-hero-content">
             <h1>Gallery</h1>
             <p>Moments that move. Energy that ignites. Passion that unites.</p>
@@ -386,9 +390,17 @@
         <h2>Our Performances & Moments</h2>
         
         <div class="gallery-grid" id="gallery-grid">
-            <!-- Dynamic content loaded here -->
+            <!-- Dynamic content from Firebase -->
         </div>
     </section>
+
+    <!-- Lightbox Popup -->
+    <div class="lightbox" id="lightbox">
+        <button class="close-btn" id="close-lightbox">&times;</button>
+        <div class="lightbox-content" id="lightbox-content">
+            <!-- Media and info will be injected here by JavaScript -->
+        </div>
+    </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
@@ -425,38 +437,23 @@
             snapshot.forEach(child => {
                 items.push({ key: child.key, ...child.val() });
             });
-            items.reverse(); // newest first
+            items.reverse();
 
             items.forEach(item => {
                 const url = item.url || 'https://via.placeholder.com/400x500?text=No+Media';
                 const title = item.title || 'Untitled';
                 const desc = item.description || 'Dance moment';
 
-                const isVideo = 
-                    item.type === 'video' ||
-                    /\.(mp4|webm|ogg)$/i.test(url);
+                const isVideo = item.type === 'video' || /\.(mp4|webm|ogg)$/i.test(url);
 
-                let mediaHTML = '';
-
-                if (isVideo) {
-                    mediaHTML = `
-                        <div class="video-wrapper">
-                            <video 
-                                class="gallery-video" 
-                                preload="metadata" 
-                                loop 
-                                muted 
-                                playsinline
-                            >
-                                <source src="${url}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <button class="play-btn" aria-label="Play/Pause video"></button>
-                        </div>
-                    `;
-                } else {
-                    mediaHTML = `<img src="${url}" alt="${title}" loading="lazy">`;
-                }
+                let mediaHTML = isVideo 
+                    ? `<div class="video-wrapper">
+                         <video class="gallery-video" preload="metadata" loop muted playsinline>
+                           <source src="${url}" type="video/mp4">
+                         </video>
+                         <button class="play-btn" aria-label="Play video"></button>
+                       </div>`
+                    : `<img src="${url}" alt="${title}" loading="lazy">`;
 
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
@@ -468,39 +465,82 @@
                     </div>
                 `;
 
+                // Open lightbox when clicking the card
+                div.addEventListener('click', () => openLightbox(url, title, desc, isVideo));
+
                 grid.appendChild(div);
             });
         });
     </script>
 
     <script>
-        // Mobile menu toggle
+        // Mobile menu
         const mobileMenu = document.getElementById('mobile-menu');
         const navLinks = document.querySelector('.nav-links');
 
         if (mobileMenu && navLinks) {
             mobileMenu.addEventListener('click', () => {
                 navLinks.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
             });
         }
 
-        // Video play/pause on click anywhere in wrapper
+        // Lightbox functions
+        const lightbox = document.getElementById('lightbox');
+        const lightboxContent = document.getElementById('lightbox-content');
+        const closeBtn = document.getElementById('close-lightbox');
+
+        function openLightbox(url, title, desc, isVideo) {
+            let mediaHTML = '';
+
+            if (isVideo) {
+                mediaHTML = `
+                    <video class="lightbox-media" controls autoplay loop playsinline>
+                        <source src="${url}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            } else {
+                mediaHTML = `<img src="${url}" alt="${title}" class="lightbox-media">`;
+            }
+
+            lightboxContent.innerHTML = `
+                ${mediaHTML}
+                <div class="lightbox-info">
+                    <h3>${title}</h3>
+                    <p>${desc}</p>
+                </div>
+            `;
+
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'visible';
+        }
+
+        closeBtn.addEventListener('click', closeLightbox);
+
+        // Close lightbox when clicking outside the content
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+
+        // Video play/pause inside cards (optional - still works)
         document.addEventListener('click', function(e) {
             const wrapper = e.target.closest('.video-wrapper');
-            if (!wrapper) return;
-
-            const video = wrapper.querySelector('.gallery-video');
-            if (!video) return;
-
-            e.preventDefault(); // prevent bubbling issues
-
-            if (video.paused || video.ended) {
-                video.play().catch(() => {});
-                video.classList.add('playing');
-            } else {
-                video.pause();
-                video.classList.remove('playing');
+            if (wrapper && !e.target.closest('.gallery-item')) { // prevent conflict with lightbox
+                const video = wrapper.querySelector('.gallery-video');
+                if (video) {
+                    if (video.paused || video.ended) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                }
             }
         });
     </script>
