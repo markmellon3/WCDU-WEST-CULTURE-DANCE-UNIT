@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MarkMellon Gallery - Premium futuristic image collection with stunning visuals and glassmorphism design.">
+    <meta name="keywords" content="MarkMellon, Mark Mellon, image gallery, photography, futuristic art, glassmorphism, premium images">
+    <meta name="author" content="MarkMellon">
+    <meta name="robots" content="index, follow, imageindex">
+    <title>MARKMELLON COLLECTION | Image Collection</title>
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="MARKMELLON Gallery - Premium Futuristic Images">
+    <meta property="og:description" content="Explore a modern, dynamic image gallery. Images update in real-time.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://markmellon.com">
+    <meta property="og:image" content="https://markmellon.com/hero-preview.jpg">
+    <meta property="og:site_name" content="MarkMellon Gallery">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MarkMellon Gallery">
+    <meta name="twitter:description" content="Premium futuristic image gallery">
+    <meta name="twitter:image" content="https://markmellon.com/hero-preview.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+    <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+    <link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-database-compat.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600&display=swap');
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .hero-bg {
+            background-size: cover;
+            background-position: center;
+            transition: background-image 1.2s ease-in-out;
+        }
+        
+        .gallery-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .gallery-card:hover {
+            transform: scale(1.06);
+            box-shadow: 0 20px 40px -12px rgb(34 211 238);
+        }
+        
+        .modal-content {
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes modalPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #22d3ee;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .view-count {
+            font-size: 0.75rem;
+            color: #67e8f9;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white font-sans antialiased">
+    
+   <!-- Sticky Header -->
+<header class="sticky top-0 z-50 glass border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+            <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" 
+                 alt="MarkMellon Logo" 
+                 class="w-9 h-9 object-contain rounded-2xl">
+            <h1 class="text-2xl font-semibold tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">MarkMellon</h1>
+        </div>
+        
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <a href="https://markmellon.com" target="_blank" class="nav-link hover:text-cyan-400">Main Website</a>
+            <a href="https://markmellon.com/free-for-all" target="_blank" class="nav-link hover:text-cyan-400">Free For All</a>
+            <a onclick="openContactModal()" class="nav-link hover:text-cyan-400 cursor-pointer">Contacts</a>
+            <a href="https://markmellon.com/more-websites" target="_blank" class="nav-link hover:text-cyan-400">More Websites</a>
+        </nav>
+        
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-md mx-8 hidden md:block">
+            <div class="relative">
+                <input id="searchInput" type="text" placeholder="Search by title or description..." 
+                       class="w-full bg-white/10 glass border border-white/20 rounded-3xl py-3 px-6 pl-12 text-sm focus:outline-none placeholder:text-white/50">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-cyan-400 absolute left-5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+        
+        <!-- Mobile Hamburger -->
+        <button id="hamburgerBtn" class="md:hidden w-10 h-10 flex items-center justify-center glass rounded-2xl hover:bg-white/10">
+            <svg id="hamburgerIcon" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Mobile Search -->
+    <div class="md:hidden px-6 pb-4">
+        <div class="relative">
+            <input id="mobileSearchInput" type="text" placeholder="Search images..." 
+                   class="w-full bg-white/10 glass border border-white/20 rounded-3xl py-3 px-6 pl-12 text-sm focus:outline-none placeholder:text-white/50">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-cyan-400 absolute left-5 top-1/2 -translate-y-1/2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 01-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+    </div>
+</header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden fixed inset-0 z-[100] bg-black/70 flex items-start justify-end pt-20 px-4">
+        <div class="glass w-80 rounded-3xl shadow-2xl overflow-hidden">
+            <div class="p-6 flex flex-col gap-4">
+                <a onclick="toggleMobileMenu()" href="https://markmellon.com" target="_blank" class="flex items-center justify-between px-6 py-4 glass rounded-2xl hover:bg-white/10 text-lg font-medium">Main Website <span class="text-cyan-400">→</span></a>
+                <a onclick="toggleMobileMenu()" href="https://markmellon.com/free-for-all" target="_blank" class="flex items-center justify-between px-6 py-4 glass rounded-2xl hover:bg-white/10 text-lg font-medium">Free For All <span class="text-cyan-400">→</span></a>
+                <a onclick="toggleMobileMenu(); openContactModal()" class="flex items-center justify-between px-6 py-4 glass rounded-2xl hover:bg-white/10 text-lg font-medium">Contacts <span class="text-cyan-400">→</span></a>
+                <a onclick="toggleMobileMenu()" href="https://markmellon.com/more-websites" target="_blank" class="flex items-center justify-between px-6 py-4 glass rounded-2xl hover:bg-white/10 text-lg font-medium">More Websites <span class="text-cyan-400">→</span></a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- HERO - Smaller -->
+    <section id="hero" class="hero-bg h-[70vh] flex items-center relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/60 to-zinc-950"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <div class="inline-flex items-center gap-2 bg-white/10 glass px-5 py-2 rounded-3xl mb-6 text-sm font-medium">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                LIVE FEED
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl font-bold tracking-tighter leading-none mb-4" style="font-family: 'Space Grotesk', sans-serif;">
+                MARKMELLON<br>Gallery
+            </h1>
+            
+            <p class="max-w-md mx-auto text-lg text-white/80 mb-8">
+                Futuristic visuals.<br>Real-time.
+            </p>
+            
+            <button onclick="document.getElementById('gallerySection').scrollIntoView({ behavior: 'smooth' })" 
+                    class="px-7 py-3.5 bg-cyan-400 hover:bg-cyan-300 text-zinc-950 font-semibold rounded-3xl flex items-center gap-3 mx-auto text-sm">
+                Explore Collection ↓
+            </button>
+        </div>
+    </section>
+    
+    <!-- GALLERY - More Compact -->
+    <section id="gallerySection" class="max-w-7xl mx-auto px-6 py-12">
+        <div class="flex items-end justify-between mb-8">
+            <div>
+                <h2 class="text-4xl font-semibold tracking-tight">Collection</h2>
+                <p id="resultCount" class="text-white/50 text-sm">Loading images from database...</p>
+            </div>
+            <div id="filterInfo" class="text-sm text-cyan-400 font-medium hidden">
+                Showing filtered results 
+                <button onclick="clearSearch()" class="ml-4 underline text-white/60 hover:text-white">Clear</button>
+            </div>
+        </div>
+        
+        <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <!-- Images loaded dynamically -->
+        </div>
+        
+        <!-- Empty State -->
+        <div id="emptyState" class="hidden text-center py-20">
+            <div class="text-6xl mb-6 opacity-50">📸</div>
+            <h3 class="text-2xl font-medium mb-3">No images yet</h3>
+            <p class="text-white/60 max-w-sm mx-auto">Images will appear here once added to the Firebase Realtime Database under the <span class="font-mono text-cyan-400">"album"</span> node.</p>
+        </div>
+    </section>
+    
+    <!-- CONTACT MODAL -->
+    <div id="contactModal" onclick="if(event.target.id === 'contactModal') closeContactModal()" 
+         class="hidden fixed inset-0 z-[1000] bg-black/90 flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="modal-content glass max-w-lg w-full rounded-3xl overflow-hidden">
+            
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-semibold">Get In Touch</h2>
+                    <button onclick="closeContactModal()" class="text-3xl leading-none text-white/70 hover:text-white">×</button>
+                </div>
+                
+                <div class="space-y-5">
+                    <input id="contactName" type="text" placeholder="Your Name" 
+                           class="w-full bg-white/10 glass border border-white/20 rounded-2xl px-5 py-4 focus:outline-none focus:border-cyan-400">
+                    
+                    <input id="contactPhone" type="tel" placeholder="Phone Number" 
+                           class="w-full bg-white/10 glass border border-white/20 rounded-2xl px-5 py-4 focus:outline-none focus:border-cyan-400">
+                    
+                    <textarea id="contactMessage" rows="4" placeholder="Your Message..." 
+                              class="w-full bg-white/10 glass border border-white/20 rounded-3xl px-5 py-4 focus:outline-none focus:border-cyan-400"></textarea>
+                </div>
+                
+                <div class="flex gap-4 mt-8">
+                    <button onclick="submitContactForm()" 
+                            class="flex-1 bg-cyan-400 hover:bg-cyan-300 text-zinc-950 font-semibold py-4 rounded-2xl">
+                        Send Message
+                    </button>
+                    <button onclick="sendViaWhatsApp()" 
+                            class="flex-1 bg-green-500 hover:bg-green-600 font-semibold py-4 rounded-2xl flex items-center justify-center gap-2">
+                        <span>WhatsApp</span>
+                        <span class="text-xl">💬</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FULLSCREEN IMAGE MODAL -->
+    <div id="modal" onclick="if(event.target.id === 'modal') closeModal()" 
+         class="hidden fixed inset-0 z-[999] bg-black/95 flex items-center justify-center p-4">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="modal-content glass max-w-4xl w-full rounded-3xl overflow-hidden max-h-[95vh] flex flex-col">
+            
+            <div class="flex justify-end p-4 border-b border-white/10">
+                <button onclick="closeModal()" class="text-white/70 hover:text-white text-3xl leading-none">×</button>
+            </div>
+            
+            <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+                <div class="flex-1 bg-black flex items-center justify-center p-6">
+                    <img id="modalImage" src="" alt="" class="max-h-[70vh] max-w-full object-contain rounded-2xl">
+                </div>
+                
+                <div class="lg:w-96 p-8 flex flex-col">
+                    <h2 id="modalTitle" class="text-3xl font-semibold mb-4"></h2>
+                    <p id="modalDescription" class="text-white/70 leading-relaxed flex-1"></p>
+                    
+                    <div class="mt-6 text-sm text-white/60 flex items-center gap-2">
+                        <span>Views:</span>
+                        <span id="modalViewCount" class="font-mono text-cyan-400"></span>
+                    </div>
+                    
+                    <a id="modalDownloadBtn" href="#" download 
+                       class="mt-8 flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 py-4 rounded-3xl font-medium">
+                        Download High Resolution
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer class="glass border-t border-white/10 py-8">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <div class="flex items-center justify-center gap-3 mb-3">
+                <img src="https://ik.imagekit.io/s95tumxuk/IMG_0829.jpeg?updatedAt=1774445391360" 
+                     alt="MarkMellon Logo" 
+                     class="w-9 h-9 object-contain rounded-2xl">
+                <h1 class="text-2xl font-semibold tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">MarkMellon</h1>
+            </div>
+            <p class="text-white/40 text-sm">© MarkMellon • All Rights Reserved 2026</p>
+        </div>
+    </footer>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" id="jsonLdScript"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyA6abD4TVTEAzn7jLqvf62GXKCDLg8PeNw",
+            authDomain: "markmellon-874a3.firebaseapp.com",
+            projectId: "markmellon-874a3",
+            storageBucket: "markmellon-874a3.firebasestorage.app",
+            messagingSenderId: "371160128795",
+            appId: "1:371160128795:web:cf45e7edab5d82b74107be",
+            measurementId: "G-XMMWYVH4HG"
+        };
+
+        let app, db;
+        let allImages = [];
+
+        function initFirebase() {
+            app = firebase.initializeApp(firebaseConfig);
+            db = firebase.database();
+            
+            // Background
+            db.ref('background').on('value', (snapshot) => {
+                const bg = snapshot.val();
+                if (bg && bg.url) {
+                    document.getElementById('hero').style.backgroundImage = `url('${bg.url}')`;
+                }
+            });
+
+            // Album
+            db.ref('album').on('value', (snapshot) => {
+                const data = snapshot.val();
+                allImages = data ? (Array.isArray(data) ? data : Object.values(data)) : [];
+                renderGallery(allImages);
+                updateStructuredData();
+            });
+        }
+
+        // Contact Modal Functions
+        function openContactModal() {
+            document.getElementById('contactModal').classList.remove('hidden');
+            document.getElementById('contactModal').classList.add('flex');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.add('hidden');
+            document.getElementById('contactModal').classList.remove('flex');
+        }
+
+        function submitContactForm() {
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+
+            if (!name || !phone || !message) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            const contactData = {
+                name: name,
+                phone: phone,
+                message: message,
+                timestamp: new Date().toISOString()
+            };
+
+            db.ref('messages').push(contactData)
+                .then(() => {
+                    alert("✅ Message sent successfully!");
+                    closeContactModal();
+                    // Clear form
+                    document.getElementById('contactName').value = '';
+                    document.getElementById('contactPhone').value = '';
+                    document.getElementById('contactMessage').value = '';
+                })
+                .catch(err => {
+                    alert("Error sending message: " + err.message);
+                });
+        }
+
+        function sendViaWhatsApp() {
+            const name = document.getElementById('contactName').value.trim();
+            const phone = document.getElementById('contactPhone').value.trim();
+            const message = document.getElementById('contactMessage').value.trim();
+
+            if (!name || !phone || !message) {
+                alert("Please fill all fields before sending via WhatsApp");
+                return;
+            }
+
+            const whatsappMessage = `Hello, my name is ${name}.%0APhone: ${phone}%0AMessage: ${message}`;
+            const whatsappUrl = `https://wa.me/256743668990?text=${whatsappMessage}`;   // ← CHANGE THIS NUMBER
+
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Rest of your existing functions (renderGallery, openModal, etc.) remain unchanged
+        function renderGallery(images) {
+            const grid = document.getElementById('galleryGrid');
+            grid.innerHTML = '';
+
+            const emptyState = document.getElementById('emptyState');
+            const resultCount = document.getElementById('resultCount');
+
+            if (images.length === 0) {
+                emptyState.classList.remove('hidden');
+                resultCount.textContent = 'No images found';
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            resultCount.textContent = `${images.length} images`;
+
+            images.forEach((img, index) => {
+                const views = img.views || 0;
+                const card = document.createElement('div');
+                card.className = `gallery-card glass rounded-3xl overflow-hidden cursor-pointer relative`;
+                card.innerHTML = `
+                    <div class="relative">
+                        <img src="${img.url}" 
+                             alt="${img.title} - ${img.description}"
+                             loading="lazy"
+                             class="w-full aspect-square object-cover">
+                        <div class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2.5 py-1 rounded-2xl flex items-center gap-1 view-count">
+                             ${views}
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-semibold text-base mb-1 line-clamp-1">${img.title || 'Untitled'}</h3>
+                        <p class="text-xs text-white/70 line-clamp-2">${img.description || ''}</p>
+                    </div>
+                `;
+                card.onclick = () => openModal(index);
+                grid.appendChild(card);
+            });
+        }
+
+        function openModal(index) {
+            const img = allImages[index];
+            if (!img) return;
+
+            const newViews = (img.views || 0) + 1;
+            
+            db.ref('album').once('value', (snapshot) => {
+                const data = snapshot.val();
+                const keys = Object.keys(data || {});
+                if (keys[index]) {
+                    db.ref(`album/${keys[index]}/views`).set(newViews);
+                }
+            });
+
+            document.getElementById('modalImage').src = img.url;
+            document.getElementById('modalTitle').textContent = img.title || 'Untitled';
+            document.getElementById('modalDescription').textContent = img.description || '';
+            document.getElementById('modalViewCount').textContent = newViews;
+            document.getElementById('modalDownloadBtn').href = img.url;
+
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal').classList.add('flex');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function initSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const mobileSearch = document.getElementById('mobileSearchInput');
+
+            const filterImages = (query) => {
+                const q = query.toLowerCase().trim();
+                if (!q) {
+                    renderGallery(allImages);
+                    document.getElementById('filterInfo').classList.add('hidden');
+                    return;
+                }
+
+                const filtered = allImages.filter(img => 
+                    (img.title || '').toLowerCase().includes(q) ||
+                    (img.description || '').toLowerCase().includes(q)
+                );
+
+                renderGallery(filtered);
+                document.getElementById('filterInfo').classList.remove('hidden');
+            };
+
+            searchInput.addEventListener('input', (e) => filterImages(e.target.value));
+            mobileSearch.addEventListener('input', (e) => filterImages(e.target.value));
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('mobileSearchInput').value = '';
+            document.getElementById('filterInfo').classList.add('hidden');
+            renderGallery(allImages);
+        }
+
+        function initMobileMenu() {
+            document.getElementById('hamburgerBtn').addEventListener('click', toggleMobileMenu);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('hamburgerIcon');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6h12v12" />`;
+            } else {
+                menu.classList.add('hidden');
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />`;
+            }
+        }
+
+        function updateStructuredData() {
+            const script = document.getElementById('jsonLdScript');
+            const imageObjects = allImages.map(img => ({
+                "@type": "ImageObject",
+                "url": img.url,
+                "name": img.title,
+                "description": img.description,
+                "contentUrl": img.url
+            }));
+
+            const jsonLd = {
+                "@context": "https://schema.org",
+                "@type": "ImageGallery",
+                "name": "MarkMellon Gallery",
+                "description": "Premium futuristic image collection",
+                "url": "https://markmellon.com",
+                "image": imageObjects
+            };
+
+            script.textContent = JSON.stringify(jsonLd, null, 2);
+        }
+
+        function init() {
+            initFirebase();
+            initSearch();
+            initMobileMenu();
+            console.log('%c✅ MarkMellon Gallery loaded - Compact Mode with View Counts + Contact Form', 'color:#22d3ee; font-weight:600');
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
