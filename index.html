@@ -1016,7 +1016,871 @@
             }
         });
     </script>
-    
+    <!-- ========== WCDU SUPER ANALYTICS SCRIPT v2.1 ========== -->
+<!-- Paste BEFORE closing </body> tag. Auto-detects your existing Firebase. -->
+<script>
+(function() {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════
+    // SETTINGS — Only configure behavior, NO Firebase config needed.
+    // This script auto-discovers your existing Firebase instance.
+    // ═══════════════════════════════════════════════════════════
+    const SETTINGS = {
+        trackClicks: true,
+        trackScrollDepth: true,
+        trackErrors: true,
+        trackWarnings: true,
+        trackPerformance: true,
+        trackReferrer: true,
+        trackTimeOnPage: true,
+        trackPageViews: true,
+        trackSessions: true,
+        trackDevice: true,
+        trackLocation: true,
+        trackInteractions: true,
+        trackFormSubmissions: true,
+        trackExternalLinks: true,
+        trackConsoleLogs: false,
+        batchInterval: 5000,
+        maxBatchSize: 20,
+        debugMode: false,
+        // If your main Firebase app uses a custom name, set it here.
+        // Leave as null to auto-detect the default app.
+        firebaseAppName: null,
+        // Max wait time (ms) for Firebase to become available if loaded late
+        firebaseWaitTimeout: 8000
+    };
+
+    // ═══════════════════════════════════════════════════════════
+    // CORE STATE
+    // ═══════════════════════════════════════════════════════════
+    let db = null;
+    let ready = false;
+    let sessionId = null;
+    let visitorId = null;
+    let pageLoadTime = Date.now();
+    let eventQueue = [];
+    let scrollDepths = [];
+    let maxScrollDepth = 0;
+    let clickCount = 0;
+    let errorCount = 0;
+    let warningCount = 0;
+    let formSubmissions = 0;
+    let externalClicks = 0;
+    let interactionCount = 0;
+    let lastActivityTime = Date.now();
+    let isPageVisible = true;
+    let heartbeatInterval = null;
+    let batchInterval = null;
+    let pendingPageView = null;
+
+    // ═══════════════════════════════════════════════════════════
+    // DEBUG LOGGER
+    // ═══════════════════════════════════════════════════════════
+    function log(...args) {
+        if (SETTINGS.debugMode) {
+            console.log('%c[WCDU Analytics]', 'color: #ff4081; font-weight: bold;', ...args);
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // SESSION & VISITOR ID GENERATORS
+    // ═══════════════════════════════════════════════════════════
+    function generateSessionId() {
+        try {
+            const stored = sessionStorage.getItem('wcdu_session_id');
+            const storedTime = parseInt(sessionStorage.getItem('wcdu_session_time') || '0');
+            if (stored && (Date.now() - storedTime) < 1800000) {
+                sessionStorage.setItem('wcdu_session_time', Date.now().toString());
+                return stored;
+            }
+        } catch(e) {}
+        const newId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        try {
+            sessionStorage.setItem('wcdu_session_id', newId);
+            sessionStorage.setItem('wcdu_session_time', Date.now().toString());
+        } catch(e) {}
+        return newId;
+    }
+
+    function generateVisitorId() {
+        if (visitorId) return visitorId;
+        try {
+            let stored = localStorage.getItem('wcdu_visitor_id');
+            if (stored) { visitorId = stored; return stored; }
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.textBaseline = 'top';
+            ctx.font = '14px Arial';
+            ctx.fillText('WCDU-FP-' + navigator.language, 2, 2);
+            const fp = canvas.toDataURL().slice(-50);
+            const id = 'vis_' + btoa(fp + navigator.userAgent.slice(-20) + screen.width)
+                .replace(/[^a-zA-Z0-9]/g, '').substr(0, 30);
+            localStorage.setItem('wcdu_visitor_id', id);
+            visitorId = id;
+            return id;
+        } catch(e) {
+            visitorId = 'vis_fallback_' + Date.now();
+            return visitorId;
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // FIREBASE DISCOVERY — The core of this update.
+    // Detects existing Firebase without needing config.
+    // ═══════════════════════════════════════════════════════════
+    function discoverFirebase() {
+        // Scenario 1: Firebase SDK is loaded AND app is already initialized
+        if (typeof firebase !== 'undefined') {
+            log('Firebase SDK found in global scope');
+
+            // Check if any app is initialized
+            if (firebase.apps && firebase.apps.length > 0) {
+                // Look for the specific named app, or use the default
+                const app = SETTINGS.firebaseAppName
+                    ? firebase.apps.find(a => a.name === SETTINGS.firebaseAppName)
+                    : firebase.apps[0]; // Default app is always first
+
+                if (app) {
+                    try {
+                        db = app.database();
+                        log('Reusing existing Firebase app "' + app.name + '" — database acquired');
+                        return true;
+                    } catch(e) {
+                        log('Database access failed on existing app:', e.message);
+                        // Maybe database module isn't loaded yet
+                        return false;
+                    }
+                }
+            }
+
+            // Scenario 2: Firebase SDK loaded but NO app initialized yet.
+            // This can happen if this script runs before your main init code.
+            // We wait for it.
+            log('Firebase SDK present but no app initialized yet — will retry');
+            return false;
+        }
+
+        // Scenario 3: Firebase not in global scope at all
+        log('Firebase SDK not yet loaded — will retry');
+        return false;
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // FIREBASE INITIALIZATION WITH RETRY
+    // Repeatedly checks until Firebase is ready or timeout.
+    // ═══════════════════════════════════════════════════════════
+    function initFirebase() {
+        return new Promise(function(resolve) {
+            // Try immediately first
+            if (discoverFirebase()) {
+                resolve(true);
+                return;
+            }
+
+            let attempts = 0;
+            const maxAttempts = Math.ceil(SETTINGS.firebaseWaitTimeout / 300);
+            const interval = setInterval(function() {
+                attempts++;
+                if (discoverFirebase()) {
+                    clearInterval(interval);
+                    resolve(true);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(interval);
+                    log('Timed out waiting for Firebase after ' + SETTINGS.firebaseWaitTimeout + 'ms');
+                    log('Analytics will queue events and retry saves later');
+                    resolve(false);
+                }
+            }, 300);
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // Also listen for the common pattern where Firebase loads
+    // via async script tags and fires a callback or event
+    // ═══════════════════════════════════════════════════════════
+    function watchForFirebase() {
+        // Watch for firebase-app-compat script loading
+        const observer = new MutationObserver(function(mutations) {
+            for (let i = 0; i < mutations.length; i++) {
+                for (let j = 0; j < mutations[i].addedNodes.length; j++) {
+                    const node = mutations[i].addedNodes[j];
+                    if (node.tagName === 'SCRIPT' && node.src &&
+                        (node.src.includes('firebase-app') || node.src.includes('firebase-database'))) {
+                        node.addEventListener('load', function() {
+                            setTimeout(function() {
+                                if (!ready) {
+                                    discoverFirebase();
+                                    if (db) onFirebaseReady();
+                                }
+                            }, 500);
+                        });
+                    }
+                }
+            }
+        });
+        observer.observe(document.head || document.documentElement, { childList: true, subtree: true });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // CALLED ONCE FIREBASE DB IS AVAILABLE
+    // Flushes queued events and sends pending page view
+    // ═══════════════════════════════════════════════════════════
+    function onFirebaseReady() {
+        ready = true;
+        log('Analytics engine is LIVE');
+
+        // Flush any events that were queued while waiting
+        flushQueue();
+
+        // Send the pending page view if it was prepared
+        if (pendingPageView) {
+            sendPageView(pendingPageView);
+            pendingPageView = null;
+        }
+
+        // Fire ready callback
+        if (typeof window.onWCDUAnalyticsReady === 'function') {
+            window.onWCDUAnalyticsReady();
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // SAFE DATA SAVE with retry and queue fallback
+    // ═══════════════════════════════════════════════════════════
+    function saveData(path, data) {
+        if (!db) {
+            // Queue it — will flush when Firebase becomes available
+            if (eventQueue.length < 100) {
+                eventQueue.push({ path: path, data: data });
+            }
+            return;
+        }
+
+        var retries = 0;
+        var maxRetries = 2;
+
+        function attemptSave() {
+            try {
+                var ref = db.ref(path);
+                ref.push(data).catch(function(err) {
+                    if (retries < maxRetries) {
+                        retries++;
+                        setTimeout(attemptSave, 1000 * retries);
+                    }
+                    log('Save error:', err.message);
+                });
+            } catch(e) {
+                if (retries < maxRetries) {
+                    retries++;
+                    setTimeout(attemptSave, 1000 * retries);
+                } else {
+                    // Put it back in queue for later
+                    if (eventQueue.length < 100) {
+                        eventQueue.push({ path: path, data: data });
+                    }
+                }
+            }
+        }
+
+        attemptSave();
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // FLUSH QUEUED EVENTS
+    // ═══════════════════════════════════════════════════════════
+    function flushQueue() {
+        if (!db || eventQueue.length === 0) return;
+        var batch = eventQueue.splice(0, SETTINGS.maxBatchSize);
+        for (var i = 0; i < batch.length; i++) {
+            saveData(batch[i].path, batch[i].data);
+        }
+        log('Flushed ' + batch.length + ' queued events');
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // DATA COLLECTORS
+    // ═══════════════════════════════════════════════════════════
+    function getDeviceInfo() {
+        var ua = navigator.userAgent;
+        var browser = 'Unknown', os = 'Unknown', deviceType = 'Desktop';
+
+        if (ua.includes('Firefox/')) browser = 'Firefox';
+        else if (ua.includes('Edg/')) browser = 'Edge';
+        else if (ua.includes('OPR/') || ua.includes('Opera')) browser = 'Opera';
+        else if (ua.includes('Chrome/')) browser = 'Chrome';
+        else if (ua.includes('Safari/') && !ua.includes('Chrome')) browser = 'Safari';
+        else if (ua.includes('SamsungBrowser')) browser = 'Samsung';
+
+        if (ua.includes('Windows NT 10')) os = 'Windows 10/11';
+        else if (ua.includes('Windows')) os = 'Windows';
+        else if (ua.includes('Mac OS X')) os = 'macOS';
+        else if (ua.includes('Android')) os = 'Android';
+        else if (/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+        else if (ua.includes('Linux')) os = 'Linux';
+
+        if (/Mobi|Android.*Mobile|iPhone|iPod/.test(ua)) deviceType = 'Mobile';
+        else if (/iPad|Android(?!.*Mobile)|Tablet/.test(ua)) deviceType = 'Tablet';
+
+        return {
+            browser: browser,
+            browserVersion: (ua.match(/(?:Firefox|Chrome|Edg|Safari|Opera|OPR|SamsungBrowser)\/[\d.]+/) || [''])[0].split('/').pop() || 'Unknown',
+            os: os,
+            deviceType: deviceType,
+            screenWidth: screen.width,
+            screenHeight: screen.height,
+            viewportWidth: window.innerWidth,
+            viewportHeight: window.innerHeight,
+            pixelRatio: window.devicePixelRatio || 1,
+            touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+            language: navigator.language || navigator.userLanguage,
+            cookiesEnabled: navigator.cookieEnabled,
+            onlineStatus: navigator.onLine,
+            hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown'
+        };
+    }
+
+    function getPageInfo() {
+        return {
+            url: window.location.href,
+            pathname: window.location.pathname,
+            hostname: window.location.hostname,
+            title: document.title,
+            referrer: document.referrer || 'Direct/None',
+            referrerDomain: document.referrer ? new URL(document.referrer).hostname : 'Direct'
+        };
+    }
+
+    function getTimestamp() {
+        var now = new Date();
+        return {
+            iso: now.toISOString(),
+            unix: Date.now(),
+            local: now.toLocaleString(),
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            utcOffset: now.getTimezoneOffset()
+        };
+    }
+
+    function getPerformanceMetrics() {
+        try {
+            var perf = performance.getEntriesByType('navigation')[0] || {};
+            var resources = performance.getEntriesByType('resource');
+            return {
+                dnsLookup: perf.domainLookupEnd - perf.domainLookupStart || 0,
+                tcpConnect: perf.connectEnd - perf.connectStart || 0,
+                ttfb: perf.responseStart - perf.requestStart || 0,
+                domContentLoaded: perf.domContentLoadedEventEnd - perf.startTime || 0,
+                fullPageLoad: perf.loadEventEnd - perf.startTime || 0,
+                totalResources: resources.length,
+                jsFiles: resources.filter(function(r) { return r.name.endsWith('.js'); }).length,
+                cssFiles: resources.filter(function(r) { return r.name.endsWith('.css'); }).length,
+                images: resources.filter(function(r) { return r.initiatorType === 'img' || /\.(jpg|jpeg|png|gif|webp|svg|ico)/i.test(r.name); }).length,
+                totalTransferSize: resources.reduce(function(s, r) { return s + (r.transferSize || 0); }, 0)
+            };
+        } catch(e) {
+            return { error: e.message };
+        }
+    }
+
+    function getNetworkInfo() {
+        var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (!conn) return { type: 'Unknown', effectiveType: 'Unknown' };
+        return {
+            type: conn.type || 'Unknown',
+            effectiveType: conn.effectiveType || 'Unknown',
+            downlink: conn.downlink || null,
+            rtt: conn.rtt || null,
+            saveData: conn.saveData || false
+        };
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // GEOLOCATION (free IP API, 3s timeout)
+    // ═══════════════════════════════════════════════════════════
+    function getLocationInfo() {
+        return fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) })
+            .then(function(r) { return r.json(); })
+            .then(function(d) {
+                return {
+                    ip: d.ip || 'Unknown', city: d.city || 'Unknown',
+                    region: d.region || 'Unknown', country: d.country_name || 'Unknown',
+                    countryCode: d.country_code || 'Unknown',
+                    latitude: d.latitude || null, longitude: d.longitude || null,
+                    timezone: d.timezone || 'Unknown', isp: d.org || 'Unknown'
+                };
+            })
+            .catch(function() {
+                return { ip: 'Unknown', city: 'Unknown', region: 'Unknown',
+                    country: 'Unknown', countryCode: 'Unknown', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, isp: 'Unknown' };
+            });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // PAGE VIEW TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function preparePageView() {
+        visitorId = generateVisitorId();
+        sessionId = generateSessionId();
+
+        return {
+            visitorId: visitorId,
+            sessionId: sessionId,
+            device: getDeviceInfo(),
+            page: getPageInfo(),
+            network: getNetworkInfo(),
+            location: { ip: 'Unknown', city: 'Unknown', country: 'Unknown', timezone: getTimestamp().timezone },
+            timestamp: getTimestamp(),
+            entryType: 'pageview',
+            isReturningVisitor: false,
+            visitCount: 1
+        };
+    }
+
+    function sendPageView(pvData) {
+        try {
+            var count = parseInt(localStorage.getItem('wcdu_visit_count') || '0') + 1;
+            pvData.visitCount = count;
+            pvData.isReturningVisitor = count > 1;
+            localStorage.setItem('wcdu_visit_count', count.toString());
+            localStorage.setItem('wcdu_first_visit', localStorage.getItem('wcdu_first_visit') || pvData.timestamp.iso);
+            localStorage.setItem('wcdu_last_visit', pvData.timestamp.iso);
+        } catch(e) {}
+
+        saveData('Analysis/pageViews', pvData);
+        saveData('Analysis/visitors/' + pvData.visitorId + '/visits', pvData);
+        saveData('Analysis/sessions/' + pvData.sessionId, {
+            pageView: pvData,
+            sessionStart: pvData.timestamp.iso
+        });
+        log('Page view tracked:', pvData.page.pathname);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // CLICK TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackClick(e) {
+        if (!SETTINGS.trackClicks) return;
+        clickCount++;
+        interactionCount++;
+        lastActivityTime = Date.now();
+
+        var t = e.target;
+        var clickData = {
+            sessionId: sessionId,
+            visitorId: visitorId,
+            timestamp: getTimestamp(),
+            page: getPageInfo(),
+            click: {
+                x: e.clientX, y: e.clientY,
+                scrollY: window.scrollY,
+                target: {
+                    tag: t.tagName,
+                    id: t.id || null,
+                    className: typeof t.className === 'string' ? t.className.substring(0, 120) : null,
+                    text: t.textContent ? t.textContent.substring(0, 100).trim() : null,
+                    href: t.href || null,
+                    type: t.type || null
+                }
+            }
+        };
+
+        if (t.href && t.href.indexOf(window.location.hostname) === -1) {
+            externalClicks++;
+            clickData.click.isExternal = true;
+            clickData.click.externalUrl = t.href;
+            saveData('Analysis/externalClicks', clickData);
+        }
+
+        saveData('Analysis/clicks', clickData);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // SCROLL DEPTH TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackScroll() {
+        if (!SETTINGS.trackScrollDepth) return;
+        var docH = document.documentElement.scrollHeight - window.innerHeight;
+        var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0;
+        var milestones = [25, 50, 75, 100];
+        for (var i = 0; i < milestones.length; i++) {
+            if (pct >= milestones[i] && scrollDepths.indexOf(milestones[i]) === -1) {
+                scrollDepths.push(milestones[i]);
+                saveData('Analysis/scrollDepth', {
+                    sessionId: sessionId, visitorId: visitorId,
+                    timestamp: getTimestamp(), page: getPageInfo(),
+                    milestone: milestones[i], currentPercent: pct
+                });
+                log('Scroll milestone:', milestones[i] + '%');
+            }
+        }
+        maxScrollDepth = Math.max(maxScrollDepth, pct);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // ERROR TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackError(msg, source, lineno, colno, error) {
+        if (!SETTINGS.trackErrors) return;
+        errorCount++;
+        saveData('Analysis/errors', {
+            sessionId: sessionId, visitorId: visitorId,
+            timestamp: getTimestamp(), page: getPageInfo(),
+            error: {
+                message: String(msg).substring(0, 500),
+                source: source, line: lineno, col: colno,
+                stack: error ? error.stack : null,
+                type: 'JS Error'
+            }
+        });
+        return false; // Don't interfere with default handling
+    }
+
+    function trackPromiseRejection(event) {
+        errorCount++;
+        saveData('Analysis/errors', {
+            sessionId: sessionId, visitorId: visitorId,
+            timestamp: getTimestamp(), page: getPageInfo(),
+            error: {
+                message: event.reason ? (event.reason.message || String(event.reason).substring(0, 500)) : 'Unknown',
+                stack: event.reason && event.reason.stack ? event.reason.stack : null,
+                type: 'Promise Rejection'
+            }
+        });
+    }
+
+    function trackResourceError(e) {
+        var t = e.target;
+        if (!t || t === window) return;
+        saveData('Analysis/errors', {
+            sessionId: sessionId, visitorId: visitorId,
+            timestamp: getTimestamp(), page: getPageInfo(),
+            error: {
+                message: 'Failed to load resource',
+                type: 'Resource Error',
+                tag: t.tagName,
+                src: t.src || t.href || 'Unknown'
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // WARNING TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackWarning(args) {
+        if (!SETTINGS.trackWarnings) return;
+        warningCount++;
+        if (warningCount <= 10) {
+            saveData('Analysis/warnings', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                warning: {
+                    message: Array.prototype.slice.call(args).map(function(a) {
+                        return typeof a === 'object' ? JSON.stringify(a) : String(a);
+                    }).join(' ').substring(0, 500),
+                    type: 'Console Warning'
+                }
+            });
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // FORM SUBMISSION TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackFormSubmission(e) {
+        if (!SETTINGS.trackFormSubmissions) return;
+        formSubmissions++;
+        var form = e.target;
+        var fields = form.querySelectorAll('input, textarea, select');
+        var fieldNames = [];
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].name) fieldNames.push(fields[i].name);
+        }
+        saveData('Analysis/formSubmissions', {
+            sessionId: sessionId, visitorId: visitorId,
+            timestamp: getTimestamp(), page: getPageInfo(),
+            form: {
+                id: form.id || null,
+                action: form.action || null,
+                method: form.method || 'GET',
+                fieldsCount: fields.length,
+                fieldNames: fieldNames,
+                hasPassword: Array.prototype.some.call(fields, function(el) { return el.type === 'password'; })
+            }
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // PERFORMANCE TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackPerformance() {
+        if (!SETTINGS.trackPerformance) return;
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                saveData('Analysis/performance', {
+                    sessionId: sessionId, visitorId: visitorId,
+                    timestamp: getTimestamp(), page: getPageInfo(),
+                    performance: getPerformanceMetrics(),
+                    network: getNetworkInfo()
+                });
+                log('Performance tracked');
+            }, 1500);
+        });
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // HEARTBEAT — Updates session every 30s
+    // ═══════════════════════════════════════════════════════════
+    function startHeartbeat() {
+        heartbeatInterval = setInterval(function() {
+            var timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000);
+            var idleTime = Math.round((Date.now() - lastActivityTime) / 1000);
+
+            saveData('Analysis/heartbeats', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                heartbeat: {
+                    timeOnPageSeconds: timeOnPage,
+                    idleTimeSeconds: idleTime,
+                    isActive: idleTime < 30,
+                    isPageVisible: isPageVisible,
+                    scrollDepth: maxScrollDepth,
+                    clicks: clickCount,
+                    errors: errorCount,
+                    warnings: warningCount,
+                    interactions: interactionCount
+                }
+            });
+
+            // Update session node directly
+            if (db) {
+                try {
+                    db.ref('Analysis/sessions/' + sessionId).update({
+                        lastHeartbeat: getTimestamp().iso,
+                        timeOnPageSeconds: timeOnPage,
+                        maxScrollDepth: maxScrollDepth,
+                        totalClicks: clickCount,
+                        isActive: idleTime < 30
+                    }).catch(function() {});
+                } catch(e) {}
+            }
+        }, 30000);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // LEAVE TRACKER
+    // ═══════════════════════════════════════════════════════════
+    function trackLeave() {
+        clearInterval(heartbeatInterval);
+        clearInterval(batchInterval);
+        flushQueue();
+
+        var leaveData = {
+            sessionId: sessionId, visitorId: visitorId,
+            timestamp: getTimestamp(), page: getPageInfo(),
+            leave: {
+                timeOnPageSeconds: Math.round((Date.now() - pageLoadTime) / 1000),
+                maxScrollDepth: maxScrollDepth,
+                totalClicks: clickCount,
+                totalErrors: errorCount,
+                totalWarnings: warningCount,
+                formSubmissions: formSubmissions,
+                externalClicks: externalClicks,
+                interactions: interactionCount,
+                scrollMilestones: scrollDepths
+            }
+        };
+
+        saveData('Analysis/leaves', leaveData);
+
+        if (db) {
+            try {
+                db.ref('Analysis/sessions/' + sessionId).update({
+                    sessionEnd: getTimestamp().iso,
+                    durationSeconds: leaveData.leave.timeOnPageSeconds,
+                    finalScrollDepth: maxScrollDepth,
+                    endedNaturally: true
+                }).catch(function() {});
+            } catch(e) {}
+        }
+
+        log('Session ended');
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // VISIBILITY & INTERACTION & RESIZE
+    // ═══════════════════════════════════════════════════════════
+    function trackVisibility() {
+        document.addEventListener('visibilitychange', function() {
+            isPageVisible = !document.hidden;
+            saveData('Analysis/visibility', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                visible: isPageVisible
+            });
+        });
+    }
+
+    function trackInteraction() {
+        interactionCount++;
+        lastActivityTime = Date.now();
+    }
+
+    var resizeTimeout;
+    function trackResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            saveData('Analysis/resizes', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                resize: {
+                    width: window.innerWidth,
+                    height: window.innerHeight,
+                    orientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait'
+                }
+            });
+        }, 500);
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // THROTTLE UTILITY
+    // ═══════════════════════════════════════════════════════════
+    function throttle(func, limit) {
+        var inThrottle = false;
+        return function() {
+            var args = arguments;
+            var ctx = this;
+            if (!inThrottle) {
+                func.apply(ctx, args);
+                inThrottle = true;
+                setTimeout(function() { inThrottle = false; }, limit);
+            }
+        };
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // PUBLIC API — For manual tracking from your main site
+    // ═══════════════════════════════════════════════════════════
+    window.WCDUAnalytics = {
+        trackEvent: function(eventName, data) {
+            saveData('Analysis/customEvents', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                event: { name: eventName, data: data || {} }
+            });
+            log('Custom event:', eventName);
+        },
+
+        trackConversion: function(name, value) {
+            saveData('Analysis/conversions', {
+                sessionId: sessionId, visitorId: visitorId,
+                timestamp: getTimestamp(), page: getPageInfo(),
+                conversion: { name: name, value: value || 0 }
+            });
+            log('Conversion:', name);
+        },
+
+        trackUser: function(userId, userData) {
+            saveData('Analysis/identifiedUsers/' + userId, {
+                visitorId: visitorId, sessionId: sessionId,
+                timestamp: getTimestamp(), userData: userData || {}
+            });
+        },
+
+        getSessionId: function() { return sessionId; },
+        getVisitorId: function() { return visitorId; },
+        isReady: function() { return ready; },
+
+        getMetrics: function() {
+            return {
+                sessionId: sessionId, visitorId: visitorId,
+                timeOnPage: Math.round((Date.now() - pageLoadTime) / 1000),
+                scrollDepth: maxScrollDepth, clicks: clickCount,
+                errors: errorCount, warnings: warningCount,
+                interactions: interactionCount, ready: ready
+            };
+        }
+    };
+
+    // ═══════════════════════════════════════════════════════════
+    // MAIN INIT
+    // ═══════════════════════════════════════════════════════════
+    function init() {
+        log('Initializing WCDU Analytics v2.1...');
+
+        // Prepare page view data immediately (before Firebase)
+        pendingPageView = preparePageView();
+
+        // Attach all event listeners immediately (they queue if db not ready)
+        document.addEventListener('click', trackClick, true);
+        document.addEventListener('scroll', throttle(trackScroll, 200), { passive: true });
+        document.addEventListener('mousemove', throttle(trackInteraction, 5000), { passive: true });
+        document.addEventListener('keydown', throttle(trackInteraction, 5000), { passive: true });
+        document.addEventListener('touchstart', throttle(trackInteraction, 5000), { passive: true });
+        document.addEventListener('submit', trackFormSubmission, true);
+        window.addEventListener('resize', throttle(trackResize, 1000), { passive: true });
+        window.addEventListener('error', trackError, true);
+        window.addEventListener('unhandledrejection', trackPromiseRejection);
+        window.addEventListener('beforeunload', trackLeave);
+        document.addEventListener('error', trackResourceError, true);
+        trackVisibility();
+        trackPerformance();
+
+        // Override console.warn to capture warnings
+        var origWarn = console.warn;
+        console.warn = function() {
+            trackWarning(arguments);
+            origWarn.apply(console, arguments);
+        };
+
+        // Start heartbeat (saves to queue if db not ready yet)
+        startHeartbeat();
+
+        // Start batch flusher
+        batchInterval = setInterval(flushQueue, SETTINGS.batchInterval);
+
+        // Watch for Firebase scripts being injected after our init
+        watchForFirebase();
+
+        // Now try to connect to existing Firebase
+        initFirebase().then(function(success) {
+            if (success) {
+                onFirebaseReady();
+            } else {
+                // Firebase not available yet — events will queue.
+                // The MutationObserver will call onFirebaseReady() when it appears.
+                log('Running in queue mode — waiting for Firebase');
+            }
+        });
+
+        // Async location fetch (non-blocking)
+        if (SETTINGS.trackLocation) {
+            getLocationInfo().then(function(loc) {
+                if (pendingPageView) {
+                    pendingPageView.location = loc;
+                }
+                saveData('Analysis/locations/' + visitorId, {
+                    location: loc,
+                    lastSeen: getTimestamp().iso,
+                    sessionId: sessionId
+                });
+            });
+        }
+    }
+
+    // ═══════════════════════════════════════════════════════════
+    // START
+    // ═══════════════════════════════════════════════════════════
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+})();
+</script>
+<!-- ========== END WCDU SUPER ANALYTICS SCRIPT v2.1 ========== -->
     
            <!-- FOOTER -->
     <footer>
