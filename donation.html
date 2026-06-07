@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
- 
 
-  <title>WCDU Admin — Gallery</title>
+  <title>WCDU Admin — Donation Impact</title>
 
   <link rel="icon" type="image/webp" sizes="any" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -125,7 +124,6 @@
       font-size: 13.5px;
       font-weight: 500;
       text-decoration: none;
-      position: relative;
     }
 
     .nav-item:hover {
@@ -143,18 +141,6 @@
       width: 20px;
       text-align: center;
       font-size: 14px;
-    }
-
-    .nav-badge {
-      margin-left: auto;
-      background: var(--danger);
-      color: white;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 2px 7px;
-      border-radius: 10px;
-      min-width: 20px;
-      text-align: center;
     }
 
     .sidebar-footer {
@@ -349,6 +335,7 @@
       min-height: 70px;
     }
 
+    /* ── Drop Zone ── */
     .file-drop-zone {
       border: 2px dashed rgba(255,255,255,0.1);
       border-radius: 14px;
@@ -398,7 +385,7 @@
       margin-top: 6px;
     }
 
-    /* Divider */
+    /* ── Divider ── */
     .or-divider {
       display: flex;
       align-items: center;
@@ -422,7 +409,7 @@
       font-weight: 600;
     }
 
-    /* Preview grid */
+    /* ── Preview Grid ── */
     .multi-preview {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
@@ -487,7 +474,7 @@
     .status-success { background: rgba(0,230,118,0.9); }
     .status-error { background: rgba(255,82,82,0.9); }
 
-    /* Submit row */
+    /* ── Submit ── */
     .submit-row {
       display: flex;
       align-items: center;
@@ -545,7 +532,7 @@
     .status-text.success { color: var(--success); }
     .status-text.error { color: var(--danger); }
 
-    /* ── Gallery List ── */
+    /* ── Section Header ── */
     .section-header {
       display: flex;
       align-items: center;
@@ -563,7 +550,7 @@
     }
 
     .section-header h2 i {
-      color: var(--accent);
+      color: var(--success);
       font-size: 16px;
     }
 
@@ -576,11 +563,7 @@
       border: 1px solid rgba(255,255,255,0.06);
     }
 
-    #gallery-list:empty::before {
-      content: "";
-      display: block;
-    }
-
+    /* ── Gallery Items ── */
     .empty-state {
       text-align: center;
       padding: 60px 20px;
@@ -594,7 +577,7 @@
       display: block;
     }
 
-    .gallery-item {
+    .donation-item {
       background: var(--card-bg);
       backdrop-filter: blur(20px);
       border: 1px solid var(--card-border);
@@ -607,7 +590,7 @@
       transition: all 0.2s ease;
     }
 
-    .gallery-item:hover {
+    .donation-item:hover {
       border-color: rgba(255,255,255,0.18);
       background: rgba(255,255,255,0.08);
     }
@@ -641,6 +624,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      flex-wrap: wrap;
     }
 
     .item-type-badge {
@@ -723,12 +707,6 @@
       color: #00e676;
     }
 
-    /* ── Scrollbar ── */
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: #555; }
-
     /* ── Toast ── */
     .toast-container {
       position: fixed;
@@ -763,6 +741,12 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #555; }
+
     /* ── Responsive ── */
     @media (max-width: 768px) {
       .sidebar { transform: translateX(-100%); }
@@ -773,7 +757,7 @@
       .content { padding: 20px 16px 60px; }
       .topbar { padding: 14px 16px; }
       .upload-card { padding: 24px 18px; }
-      .gallery-item { flex-direction: column; align-items: stretch; }
+      .donation-item { flex-direction: column; align-items: stretch; }
       .gallery-thumb { width: 100%; height: 200px; }
       .item-actions { flex-direction: row; justify-content: flex-end; }
       .item-desc { max-width: 100%; }
@@ -804,15 +788,15 @@
 
     <nav class="sidebar-nav">
       <div class="nav-section-label">Overview</div>
-      <a class="nav-item" href="admin.html">
+      <a class="nav-item" href="index.html">
         <i class="fas fa-chart-pie"></i> Dashboard
       </a>
 
       <div class="nav-section-label">Management</div>
-      <a class="nav-item" href="donation.html">
+      <a class="nav-item active" href="donation.html">
         <i class="fas fa-hand-holding-heart"></i> Donations
       </a>
-      <a class="nav-item active" href="gallery.html">
+      <a class="nav-item" href="gallery.html">
         <i class="fas fa-images"></i> Gallery
       </a>
 
@@ -840,16 +824,13 @@
           <i class="fas fa-bars"></i>
         </button>
         <div>
-          <div class="topbar-title">Gallery Manager</div>
-          <div class="topbar-sub">Bulk upload images & manual video/image links</div>
+          <div class="topbar-title">Donation Impact</div>
+          <div class="topbar-sub">Manage photos & videos showing where donations go</div>
         </div>
       </div>
       <div class="topbar-right">
         <button class="topbar-btn" onclick="location.reload()" title="Refresh">
           <i class="fas fa-sync-alt"></i>
-        </button>
-        <button class="topbar-btn" onclick="handleLogout()" title="Sign Out" style="color:#ff5252;">
-          <i class="fas fa-sign-out-alt"></i>
         </button>
       </div>
     </div>
@@ -858,9 +839,9 @@
 
       <!-- Upload Card -->
       <div class="upload-card glass">
-        <h2><i class="fas fa-cloud-upload-alt"></i> Add Media</h2>
+        <h2><i class="fas fa-hand-holding-heart"></i> Add Donation Impact Media</h2>
 
-        <form id="mediaForm" onsubmit="return false;">
+        <form id="donationForm" onsubmit="return false;">
 
           <!-- File Drop Zone -->
           <div class="form-group">
@@ -885,22 +866,22 @@
             <input type="url" class="form-input" id="manualUrl" placeholder="https://youtu.be/... or https://.../image.jpg">
           </div>
 
-          <!-- Title -->
+          <!-- Caption -->
           <div class="form-group">
-            <label class="form-label">Title</label>
-            <input type="text" class="form-input" id="titleBase" placeholder="Performance" value="Performance">
+            <label class="form-label">Caption / Short Description</label>
+            <input type="text" class="form-input" id="caption" placeholder="Giving school supplies to kids">
           </div>
 
           <!-- Description -->
           <div class="form-group">
-            <label class="form-label">Description (optional)</label>
-            <textarea class="form-textarea" id="description" rows="2" placeholder="Moment from..."></textarea>
+            <label class="form-label">Longer Description (optional)</label>
+            <textarea class="form-textarea" id="description" rows="2" placeholder="Kids from the community receiving books and uniforms..."></textarea>
           </div>
 
           <!-- Submit -->
           <div class="submit-row">
             <button type="submit" class="submit-btn" id="submitBtn" disabled>
-              <span class="btn-label"><i class="fas fa-plus"></i> Add to Gallery</span>
+              <span class="btn-label"><i class="fas fa-plus"></i> Add to Donation Gallery</span>
               <span class="spinner"></span>
             </button>
             <span class="status-text" id="statusLine"></span>
@@ -909,16 +890,16 @@
         </form>
       </div>
 
-      <!-- Gallery List -->
+      <!-- Donation List -->
       <div class="section-header">
-        <h2><i class="fas fa-photo-video"></i> Gallery Items</h2>
+        <h2><i class="fas fa-heart"></i> Donation Impact Items</h2>
         <span class="item-count" id="itemCount">0 items</span>
       </div>
 
-      <div id="gallery-list">
+      <div id="donation-list">
         <div class="empty-state">
-          <i class="fas fa-images"></i>
-          <p>No media items yet. Upload some above.</p>
+          <i class="fas fa-hand-holding-heart"></i>
+          <p>No donation impact media added yet. Upload some above.</p>
         </div>
       </div>
 
@@ -981,19 +962,6 @@
     })();
 
     // ═══════════════════════════════════════
-    // LOGOUT
-    // ═══════════════════════════════════════
-    window.handleLogout = function() {
-      if (auth && auth.currentUser) {
-        auth.signOut().then(function() {
-          window.location.replace('login.html');
-        });
-      } else {
-        window.location.replace('login.html');
-      }
-    };
-
-    // ═══════════════════════════════════════
     // SIDEBAR MOBILE
     // ═══════════════════════════════════════
     window.toggleSidebar = function() {
@@ -1025,7 +993,7 @@
     }
 
     // ═══════════════════════════════════════
-    // GALLERY LOGIC
+    // DONATION LOGIC
     // ═══════════════════════════════════════
     var IMGBB_KEY = "47f7dff148164ff31a5947e6ee635363";
     var MAX_FILES = 20;
@@ -1035,12 +1003,12 @@
     var previewCont = document.getElementById('multiPreview');
     var submitBtn = document.getElementById('submitBtn');
     var statusLine = document.getElementById('statusLine');
-    var titleBaseInput = document.getElementById('titleBase');
+    var captionInput = document.getElementById('caption');
     var descInput = document.getElementById('description');
     var dropZone = document.getElementById('dropZone');
 
     var selectedFiles = [];
-    var galleryRef = db.ref('gallery');
+    var donationRef = db.ref('donation');
 
     // ── Drag & Drop ──
     dropZone.addEventListener('dragover', function(e) {
@@ -1119,10 +1087,10 @@
     }
 
     // ── Submit ──
-    document.getElementById('mediaForm').addEventListener('submit', function(e) {
+    document.getElementById('donationForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
-      var baseTitle = titleBaseInput.value.trim() || 'Untitled';
+      var caption = captionInput.value.trim() || 'Impact moment';
       var description = descInput.value.trim() || null;
       var manualUrl = manualUrlInput.value.trim();
 
@@ -1139,14 +1107,14 @@
       if (manualUrl) {
         var type = manualUrl.match(/\.(mp4|webm|ogg)$/i) ? 'video' : 'image';
         promises.push(
-          galleryRef.push().set({
+          donationRef.push().set({
             url: manualUrl,
-            title: baseTitle,
+            caption: caption,
             description: description,
             createdAt: new Date().toISOString(),
             type: type
           }).then(function() {
-            return { success: true, name: baseTitle };
+            return { success: true, name: caption };
           })
         );
       }
@@ -1156,7 +1124,6 @@
         var suffix = selectedFiles.length > 1 ? ' #' + (i + 1) : '';
         var thumbEl = previewCont.children[i];
 
-        // Show uploading status
         if (thumbEl) {
           var existingStatus = thumbEl.querySelector('.thumb-status');
           if (existingStatus) existingStatus.remove();
@@ -1173,14 +1140,14 @@
                 var st = thumbEl.querySelector('.thumb-status');
                 if (st) { st.className = 'thumb-status status-success'; st.textContent = 'Done'; }
               }
-              return galleryRef.push().set({
+              return donationRef.push().set({
                 url: url,
-                title: baseTitle + suffix,
+                caption: caption + suffix,
                 description: description,
                 createdAt: new Date().toISOString(),
                 type: 'image'
               }).then(function() {
-                return { success: true, name: baseTitle + suffix };
+                return { success: true, name: caption + suffix };
               });
             })
             .catch(function(err) {
@@ -1189,7 +1156,7 @@
                 if (st) { st.className = 'thumb-status status-error'; st.textContent = 'Failed'; }
               }
               console.error('Upload failed:', err);
-              return { success: false, name: baseTitle + suffix, error: err.message };
+              return { success: false, name: caption + suffix, error: err.message };
             })
         );
       });
@@ -1211,6 +1178,8 @@
         // Reset
         filesInput.value = '';
         manualUrlInput.value = '';
+        captionInput.value = '';
+        descInput.value = '';
         selectedFiles = [];
         previewCont.innerHTML = '';
         updateSubmitState();
@@ -1226,15 +1195,15 @@
       });
     });
 
-    // ── Load Gallery (newest first) ──
-    galleryRef.orderByChild('createdAt').on('value', function(snapshot) {
-      var list = document.getElementById('gallery-list');
+    // ── Load Donation List (newest first by push key) ──
+    donationRef.on('value', function(snapshot) {
+      var list = document.getElementById('donation-list');
       var countEl = document.getElementById('itemCount');
       list.innerHTML = '';
 
       if (!snapshot.exists()) {
         countEl.textContent = '0 items';
-        list.innerHTML = '<div class="empty-state"><i class="fas fa-images"></i><p>No media items yet. Upload some above.</p></div>';
+        list.innerHTML = '<div class="empty-state"><i class="fas fa-hand-holding-heart"></i><p>No donation impact media added yet. Upload some above.</p></div>';
         return;
       }
 
@@ -1242,17 +1211,19 @@
       snapshot.forEach(function(child) {
         items.push({ key: child.key, val: child.val() });
       });
-      items.reverse();
+
+      // Sort by key descending (newest push key first)
+      items.sort(function(a, b) { return b.key.localeCompare(a.key); });
 
       countEl.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
 
       items.forEach(function(item) {
         var d = item.val;
         var isVideo = d.type === 'video' || (d.url && d.url.match(/\.(mp4|webm|ogg)$/i));
-        var isYoutube = d.url && (d.url.match(/youtu\.?be/i));
+        var isYoutube = d.url && d.url.match(/youtu\.?be/i);
 
         var div = document.createElement('div');
-        div.className = 'gallery-item';
+        div.className = 'donation-item';
 
         var mediaHtml = '';
         if (isVideo && !isYoutube) {
@@ -1261,9 +1232,9 @@
           var vidId = '';
           var m = d.url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
           if (m) vidId = m[1];
-          mediaHtml = '<img src="https://img.youtube.com/vi/' + vidId + '/mqdefault.jpg" alt="' + (d.title || '') + '">';
+          mediaHtml = '<img src="https://img.youtube.com/vi/' + vidId + '/mqdefault.jpg" alt="' + escHTML(d.caption || '') + '">';
         } else {
-          mediaHtml = '<img src="' + d.url + '" alt="' + (d.title || '') + '" loading="lazy">';
+          mediaHtml = '<img src="' + d.url + '" alt="' + escHTML(d.caption || '') + '" loading="lazy">';
         }
 
         var typeBadge = isVideo
@@ -1275,7 +1246,7 @@
         div.innerHTML =
           '<div class="gallery-thumb">' + mediaHtml + '</div>' +
           '<div class="item-info">' +
-            '<div class="item-title">' + escHTML(d.title || 'No title') + ' ' + typeBadge + '</div>' +
+            '<div class="item-title">' + escHTML(d.caption || 'No caption') + ' ' + typeBadge + '</div>' +
             '<div class="item-desc">' + escHTML(d.description || '') + '</div>' +
             '<div class="item-date">' + dateStr + '</div>' +
             (isVideo ? '<a class="item-url" href="' + d.url + '" target="_blank"><i class="fas fa-external-link-alt" style="font-size:10px;margin-right:4px;"></i>Open link</a>' : '') +
@@ -1293,7 +1264,7 @@
       list.querySelectorAll('.action-btn.delete').forEach(function(btn) {
         btn.addEventListener('click', function() {
           if (confirm('Delete this item permanently?')) {
-            galleryRef.child(btn.dataset.key).remove()
+            donationRef.child(btn.dataset.key).remove()
               .then(function() { showToast('Item deleted', 'success'); })
               .catch(function(err) { showToast('Delete failed: ' + err.message, 'error'); });
           }
