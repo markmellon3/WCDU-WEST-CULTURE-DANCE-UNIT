@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="module" src="https://ads.smmaria.site/assets/ad-network/maria-ads.js"></script>
+    <title>WCDU - Events | Join Our Next Event</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" sizes="16x16" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="32x32" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="icon" type="image/webp" sizes="96x96" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --black: #080808;
+            --dark: #111111;
+            --dark-2: #1a1a1a;
+            --cream: #F5F3EE;
+            --cream-2: #EDEAE2;
+            --white: #FFFFFF;
+            --pink: #FF2B83;
+            --orange: #FF6B1A;
+            --pink-soft: rgba(255, 43, 131, 0.1);
+            --orange-soft: rgba(255, 107, 26, 0.1);
+            --border-dark: rgba(255, 255, 255, 0.08);
+            --border-light: rgba(0, 0, 0, 0.1);
+            --text-muted-dark: rgba(255, 255, 255, 0.65);
+            --text-muted-light: rgba(0, 0, 0, 0.65);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--white);
+            background: var(--black);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+        ::selection { background: var(--pink); color: var(--white); }
+        :focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+
+        /* ============ LAYOUT HELPERS ============ */
+        .container { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+        .section { padding: 120px 0; position: relative; }
+
+        .section-eyebrow {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 12px; font-weight: 600; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--pink);
+            margin-bottom: 24px; display: inline-flex; align-items: center; gap: 12px;
+        }
+        .section-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--pink); }
+        .section-eyebrow.center { justify-content: center; }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 700;
+            line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 24px;
+        }
+        .section-title .accent { color: var(--pink); }
+
+        .section-subtitle { font-size: 1.1rem; line-height: 1.7; opacity: 0.8; max-width: 600px; margin: 0 auto; }
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 16px 32px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; border-radius: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
+            border: 2px solid transparent; white-space: nowrap;
+        }
+        .btn-primary { background: var(--pink); color: var(--white); border-color: var(--pink); }
+        .btn-primary:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-2px); }
+        .btn-secondary { background: transparent; color: var(--white); border-color: rgba(255, 255, 255, 0.4); }
+        .btn-secondary:hover { border-color: var(--white); background: rgba(255, 255, 255, 0.05); transform: translateY(-2px); }
+        .btn-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.85rem;
+            font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--pink); transition: gap 0.3s ease;
+        }
+        .btn-link:hover { gap: 14px; }
+
+        /* ============ HEADER / NAVIGATION ============ */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            background: var(--black); border-bottom: 1px solid var(--border-dark);
+            transition: padding 0.3s ease, background 0.3s ease;
+        }
+        header.scrolled { padding: 0; }
+        nav {
+            max-width: 1280px; margin: 0 auto; padding: 18px 40px;
+            display: grid; grid-template-columns: 1fr auto 1fr;
+            align-items: center; gap: 30px;
+        }
+        .logo-block { display: flex; align-items: center; gap: 14px; }
+        .logo-mark-img {
+            width: 44px; height: 44px; object-fit: cover;
+            border-radius: 4px; flex-shrink: 0; background: var(--dark);
+        }
+        .logo-text { display: flex; flex-direction: column; line-height: 1; }
+        .logo-text strong {
+            font-family: 'Space Grotesk', sans-serif; font-size: 11px;
+            font-weight: 700; letter-spacing: 0.15em; color: var(--white);
+        }
+        .logo-text span {
+            font-size: 10px; font-weight: 500; letter-spacing: 0.12em;
+            color: var(--text-muted-dark); margin-top: 3px;
+        }
+        .nav-links { list-style: none; display: flex; gap: 36px; justify-content: center; }
+        .nav-links a {
+            font-size: 0.9rem; font-weight: 500; color: var(--text-muted-dark);
+            position: relative; padding: 6px 0; transition: color 0.3s ease;
+        }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -2px; left: 0;
+            width: 0; height: 2px; background: var(--pink); transition: width 0.3s ease;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--white); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+        .nav-right { display: flex; justify-content: flex-end; align-items: center; gap: 16px; }
+        .nav-donate {
+            padding: 11px 24px; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em;
+            text-transform: uppercase; background: var(--pink); color: var(--white);
+            border-radius: 0; transition: all 0.3s ease; white-space: nowrap;
+        }
+        .nav-donate:hover { background: var(--orange); transform: translateY(-1px); }
+
+        .menu-toggle {
+            display: none; flex-direction: column; gap: 5px;
+            padding: 8px; background: none; cursor: pointer; z-index: 1001;
+        }
+        .menu-toggle .bar { width: 26px; height: 2px; background: var(--white); transition: 0.3s ease; border-radius: 0; }
+        .menu-toggle.active .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active .bar:nth-child(2) { opacity: 0; }
+        .menu-toggle.active .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        .mobile-menu {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: var(--black); z-index: 999; padding: 100px 30px 40px;
+            flex-direction: column; transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .mobile-menu.active { transform: translateX(0); }
+        .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+        .mobile-menu ul a {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 600;
+            color: var(--white); padding: 8px 0; border-bottom: 1px solid var(--border-dark);
+            display: block; transition: color 0.3s ease;
+        }
+        .mobile-menu ul a:hover { color: var(--pink); }
+        .mobile-menu .mobile-donate-wrap { margin-top: 40px; }
+        .mobile-menu .nav-donate { width: 100%; padding: 16px; text-align: center; display: block; }
+
+        /* ============ HERO SECTION ============ */
+        .hero {
+            min-height: 60vh; padding: 140px 0 60px; background: var(--black);
+            position: relative; overflow: hidden; display: flex; align-items: center;
+        }
+        .hero-content { max-width: 800px; margin: 0 auto; text-align: center; padding: 0 40px; }
+        .hero-eyebrow {
+            font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 600;
+            letter-spacing: 0.3em; text-transform: uppercase; color: var(--pink);
+            margin-bottom: 32px; display: inline-flex; align-items: center; gap: 14px; justify-content: center;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after { content: ''; width: 32px; height: 2px; background: var(--pink); }
+        .hero-title {
+            font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.8rem, 6.5vw, 5.2rem);
+            font-weight: 700; line-height: 1; letter-spacing: -0.025em;
+            margin-bottom: 32px; color: var(--white);
+        }
+        .hero-title .accent { color: var(--pink); display: inline-block; }
+        .hero-subtitle {
+            font-size: 1.15rem; line-height: 1.6; color: var(--text-muted-dark);
+            margin-bottom: 44px; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
+
+        /* ============ EVENTS GRID SECTION ============ */
+        .events-section { background: var(--cream); color: var(--black); }
+        .events-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+        }
+        .event-card {
+            background: var(--white); border: 1px solid var(--border-light);
+            overflow: hidden; transition: all 0.3s ease;
+            display: flex; flex-direction: column; border-radius: 0;
+        }
+        .event-card:hover {
+            transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+        }
+        .event-image { position: relative; height: 240px; overflow: hidden; background: var(--cream-2); }
+        .event-image img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;
+        }
+        .event-card:hover .event-image img { transform: scale(1.05); }
+        .event-date {
+            position: absolute; top: 16px; left: 16px; background: var(--pink);
+            color: var(--white); padding: 10px 14px;
+            font-family: 'Space Grotesk', sans-serif; text-align: center; line-height: 1; min-width: 56px;
+        }
+        .event-date .day { font-size: 1.5rem; font-weight: 700; display: block; margin-bottom: 4px; }
+        .event-date .month { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+        
+        .event-body { padding: 28px; display: flex; flex-direction: column; flex: 1; }
+        .event-body h3 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.25rem; font-weight: 700;
+            margin-bottom: 12px; color: var(--black); letter-spacing: -0.01em; line-height: 1.2;
+        }
+        .event-meta {
+            display: flex; align-items: center; gap: 8px; font-size: 0.85rem;
+            color: var(--text-muted-light); margin-bottom: 16px; font-weight: 500;
+        }
+        .event-meta::before {
+            content: ''; width: 6px; height: 6px; background: var(--pink); border-radius: 50%;
+        }
+        .event-desc {
+            font-size: 0.9rem; color: var(--text-muted-light); line-height: 1.6;
+            margin-bottom: 24px; flex: 1;
+        }
+        .event-link {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase; color: var(--pink);
+            transition: gap 0.3s ease;
+        }
+        .event-card:hover .event-link { gap: 14px; }
+
+        .events-empty {
+            grid-column: 1 / -1; text-align: center; padding: 80px 20px;
+            color: var(--text-muted-light); font-size: 1rem;
+            border: 1px dashed var(--border-light);
+        }
+
+        /* ============ FOOTER ============ */
+        footer {
+            background: var(--black); color: var(--white);
+            padding: 80px 0 30px; border-top: 1px solid var(--border-dark);
+        }
+        .footer-grid {
+            display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+            gap: 50px; margin-bottom: 60px;
+        }
+        .footer-brand .logo-block { margin-bottom: 24px; }
+        .footer-brand p {
+            color: var(--text-muted-dark); font-size: 0.95rem;
+            line-height: 1.7; max-width: 280px; margin-bottom: 24px;
+        }
+        .footer-tagline {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem;
+            font-weight: 700; line-height: 1.1; color: var(--white);
+        }
+        .footer-tagline span { color: var(--pink); display: block; }
+        .footer-col h4 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem;
+            font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--pink); margin-bottom: 22px;
+        }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+        .footer-col ul a, .footer-col ul button {
+            color: var(--text-muted-dark); font-size: 0.95rem; text-align: left;
+            padding: 0; transition: color 0.3s ease; font-family: 'Inter', sans-serif;
+        }
+        .footer-col ul a:hover, .footer-col ul button:hover { color: var(--pink); }
+        .footer-bottom {
+            border-top: 1px solid var(--border-dark); padding-top: 30px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 16px;
+        }
+        .footer-bottom p { color: var(--text-muted-dark); font-size: 0.85rem; }
+        .footer-bottom .location {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem;
+            font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--pink);
+        }
+
+        /* ============ ANIMATIONS ============ */
+        .fade-in {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .fade-in.delay-1 { transition-delay: 0.1s; }
+        .fade-in.delay-2 { transition-delay: 0.2s; }
+        .fade-in.delay-3 { transition-delay: 0.3s; }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 1024px) {
+            .container { padding: 0 30px; }
+            nav { padding: 16px 30px; gap: 20px; }
+            .events-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+        @media (max-width: 768px) {
+            .section { padding: 80px 0; }
+            .container { padding: 0 20px; }
+            nav { grid-template-columns: 1fr auto; padding: 16px 20px; gap: 16px; }
+            .nav-links { display: none; }
+            .nav-donate { display: none; }
+            .menu-toggle { display: flex; }
+            .mobile-menu { display: flex; }
+
+            .hero { min-height: auto; padding: 120px 0 40px; }
+            .hero-content { padding: 0 20px; }
+            
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; }
+            .footer-brand { grid-column: 1 / -1; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+        @media (max-width: 480px) {
+            .section { padding: 60px 0; }
+            .section-title { font-size: 2rem; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .events-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ============ MARIA AD STYLES (PRESERVED) ============ */
+        .maria-popup-overlay { position: fixed; bottom: 20px; right: 20px; width: 380px; max-width: calc(100% - 40px); background: #ffffff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); z-index: 10000; opacity: 0; transform: translateY(100px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); overflow: hidden; border: 1px solid #e2e8f0; }
+        .maria-popup-overlay.show { opacity: 1; transform: translateY(0); }
+        .maria-popup-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+        .maria-popup-sponsor { font-size: 12px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .maria-popup-close { background: #ef4444; border: none; color: #ffffff; font-size: 18px; font-weight: bold; cursor: pointer; width: 28px; height: 28px; line-height: 1; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+        .maria-popup-close:hover { background: #dc2626; }
+        .maria-popup-body { padding: 16px; max-height: 70vh; overflow-y: auto; }
+        .maria-popup-body img, .maria-popup-body video { width: 100%; height: auto; max-height: 350px; object-fit: contain; display: block; border-radius: 8px; margin-bottom: 12px; background: #f1f5f9; }
+        .maria-popup-body h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 700; color: #1e293b; }
+        .maria-popup-body p { margin: 0; font-size: 14px; color: #64748b; line-height: 1.4; }
+        .maria-popup-footer { display: flex; gap: 10px; padding: 0 16px 16px 16px; }
+        .maria-btn { flex: 1; padding: 12px; border-radius: 8px; text-align: center; text-decoration: none; font-size: 14px; font-weight: 700; transition: all 0.2s; cursor: pointer; border: none; }
+        .maria-btn-visit { background: #4f46e5; color: #ffffff; }
+        .maria-btn-visit:hover { background: #4338ca; }
+        .maria-btn-create { background: #fbbf24; color: #78350f; border: 1px solid #f59e0b; }
+        .maria-btn-create:hover { background: #f59e0b; }
+        .maria-banner-container { position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; display: flex; justify-content: center; padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.1), transparent); pointer-events: none; opacity: 0; transform: translateY(100px); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .maria-banner-container.show { opacity: 1; transform: translateY(0); }
+        .maria-banner { display: flex; align-items: center; width: 100%; max-width: 500px; background: #ffffff; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); padding: 12px; text-decoration: none; color: inherit; gap: 12px; pointer-events: auto; border: 1px solid #e2e8f0; cursor: pointer; }
+        .maria-banner-logo { width: 40px; height: 40px; border-radius: 8px; object-fit: cover; flex-shrink: 0; background: #f1f5f9; }
+        .maria-banner-content { flex: 1; overflow: hidden; }
+        .maria-banner-title { font-weight: 700; font-size: 14px; color: #1e293b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .maria-banner-desc { font-size: 12px; color: #64748b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .maria-banner-cta { background: #4f46e5; color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: 700; flex-shrink: 0; align-self: center; }
+        @media (max-width: 480px) { .maria-popup-overlay { left: 10px; right: 10px; bottom: 10px; width: auto; } .maria-popup-body img, .maria-popup-body video { max-height: 250px; } .maria-banner { max-width: calc(100% - 20px); } }
+    </style>
+</head>
+<body>
+
+    <!-- ============ HEADER / NAVIGATION ============ -->
+    <header id="header">
+        <nav>
+            <a href="index.html" class="logo-block">
+                <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" alt="WCDU Logo" class="logo-mark-img">
+                <div class="logo-text">
+                    <strong>WEST CULTURE</strong>
+                    <span>DANCE UNIT</span>
+                </div>
+            </a>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="index.html#contact">Community</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <a href="Donation.html" class="nav-donate">Donate</a>
+                <button class="menu-toggle" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu-panel">
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="index.html#contact">Community</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+        <div class="mobile-donate-wrap">
+            <a href="Donation.html" class="nav-donate">Donate</a>
+        </div>
+    </div>
+
+    <!-- ============ HERO SECTION ============ -->
+    <section id="home" class="hero">
+        <div class="hero-content fade-in">
+            <div class="hero-eyebrow">UPCOMING EVENTS</div>
+            <h1 class="hero-title">Join Our Next<br>Event<span class="accent">.</span></h1>
+            <p class="hero-subtitle">
+                Experience the energy of WCDU live. From community dance shows to cultural workshops and youth festivals, be part of the movement.
+            </p>
+        </div>
+    </section>
+
+    <div class="maria-ad" data-placement="placement_homepage"></div>
+
+    <!-- ============ EVENTS GRID SECTION ============ -->
+    <section id="events" class="section events-section">
+        <div class="container">
+            <div class="events-grid fade-in delay-2" id="events-grid">
+                <!-- Populated by Firebase -->
+                <div class="events-empty">Loading events...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-block">
+                        <img src="https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png" alt="WCDU Logo" class="logo-mark-img">
+                        <div class="logo-text">
+                            <strong>WEST CULTURE</strong>
+                            <span>DANCE UNIT</span>
+                        </div>
+                    </div>
+                    <p>A high-energy dance collective based in Kampala, uniting people through movement, culture, and purpose.</p>
+                    <div class="footer-tagline">
+                        Dance<br>
+                        Changes<br>
+                        <span>Lives</span>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>EXPLORE</h4>
+                    <ul>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>GET INVOLVED</h4>
+                    <ul>
+                        <li><a href="Donation.html">Donate</a></li>
+                        <li><a href="index.html#contact">Volunteer</a></li>
+                        <li><a href="index.html#contact">Collaborate</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>FOLLOW US</h4>
+                    <ul>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">TikTok</a></li>
+                        <li><a href="#">YouTube</a></li>
+                        <li><a href="#">WhatsApp</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 West Culture Dance Unit. All rights reserved.</p>
+                <span class="location">Kampala, Uganda</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============ FIREBASE & EVENTS LOGIC (MODULAR SDK) ============ -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBmEy3DcuhuSsPxQml332xalyQJVWLd4uw",
+            authDomain: "wcdu-955cb.firebaseapp.com",
+            projectId: "wcdu-955cb",
+            storageBucket: "wcdu-955cb.firebasestorage.app",
+            messagingSenderId: "381070884807",
+            appId: "1:381070884807:web:e02f4e3e3e34399f50e3e2",
+            measurementId: "G-2DXFQ992WK",
+            databaseURL: "https://wcdu-955cb-default-rtdb.firebaseio.com/"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const eventsRef = ref(db, 'events');
+
+        onValue(eventsRef, (snapshot) => {
+            const container = document.getElementById('events-grid');
+            container.innerHTML = '';
+
+            if (!snapshot.exists()) {
+                container.innerHTML = '<div class="events-empty">No upcoming events yet. Stay tuned!</div>';
+                return;
+            }
+
+            const data = snapshot.val();
+            const events = Array.isArray(data) ? data : Object.values(data);
+            
+            events.forEach(ev => {
+                const eventDate = ev.date ? new Date(ev.date) : null;
+                const day = eventDate ? eventDate.getDate() : 'TBA';
+                const month = eventDate ? eventDate.toLocaleDateString('en-US', { month: 'short' }).toUpperCase() : '';
+                
+                const timeStr = ev.time || (eventDate ? eventDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }) : 'TBA');
+                const locationStr = ev.location || 'Kampala';
+                const imgSrc = ev.imageUrl || 'https://ik.imagekit.io/s95tumxuk/Gemini_Generated_Image_7xjzql7xjzql7xjz.png';
+
+                const card = document.createElement('article');
+                card.className = 'event-card fade-in';
+                card.innerHTML = `
+                    <div class="event-image">
+                        <img src="${imgSrc}" alt="${ev.title || 'WCDU Event'}" loading="lazy">
+                        <div class="event-date">
+                            <span class="day">${day}</span>
+                            <span class="month">${month}</span>
+                        </div>
+                    </div>
+                    <div class="event-body">
+                        <h3>${ev.title || 'WCDU Event'}</h3>
+                        <div class="event-meta">${locationStr} · ${timeStr}</div>
+                        <p class="event-desc">${ev.description || 'Join us for an unforgettable experience. Get ready to dance!'}</p>
+                        <a href="#" class="event-link">LEARN MORE →</a>
+                    </div>
+                `;
+
+                container.appendChild(card);
+
+                // Re-observe new card for animation
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) entry.target.classList.add('visible');
+                    });
+                }, { threshold: 0.15 });
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <!-- ============ UI SCRIPTS ============ -->
+    <script>
+        // Mobile Menu
+        const mobileBtn = document.getElementById('mobile-menu');
+        const mobilePanel = document.getElementById('mobile-menu-panel');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileBtn.classList.toggle('active');
+            mobilePanel.classList.toggle('active');
+            const isOpen = mobilePanel.classList.contains('active');
+            mobileBtn.setAttribute('aria-expanded', isOpen);
+            document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        mobilePanel.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileBtn.classList.remove('active');
+                mobilePanel.classList.remove('active');
+                mobileBtn.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fade-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Header scroll behavior
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+    </script>
+
+    <!-- ============ WCDU SUPER ANALYTICS SCRIPT v2.1 (CLEANED & FIXED) ============ -->
+    <script>
+        (function () {
+            'use strict';
+
+            const SETTINGS = {
+                trackClicks: true, trackScrollDepth: true, trackErrors: true,
+                trackWarnings: true, trackPerformance: true, trackReferrer: true,
+                trackTimeOnPage: true, trackPageViews: true, trackSessions: true,
+                trackDevice: true, trackLocation: true, trackInteractions: true,
+                trackFormSubmissions: true, trackExternalLinks: true, trackConsoleLogs: false,
+                batchInterval: 5000, maxBatchSize: 20, debugMode: false,
+                firebaseAppName: null, firebaseWaitTimeout: 8000
+            };
+
+            let db = null, ready = false, sessionId = null, visitorId = null;
+            let pageLoadTime = Date.now(), eventQueue = [], scrollDepths = [], maxScrollDepth = 0;
+            let clickCount = 0, errorCount = 0, warningCount = 0, formSubmissions = 0;
+            let externalClicks = 0, interactionCount = 0, lastActivityTime = Date.now();
+            let isPageVisible = true, heartbeatInterval = null, batchInterval = null, pendingPageView = null;
+
+            function log(...args) { if (SETTINGS.debugMode) console.log('%c[WCDU Analytics]', 'color: #FF2B83; font-weight: bold;', ...args); }
+
+            function generateSessionId() {
+                try {
+                    const stored = sessionStorage.getItem('wcdu_session_id');
+                    const storedTime = parseInt(sessionStorage.getItem('wcdu_session_time') || '0');
+                    if (stored && (Date.now() - storedTime) < 1800000) { sessionStorage.setItem('wcdu_session_time', Date.now().toString()); return stored; }
+                } catch (e) { }
+                const newId = 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                try { sessionStorage.setItem('wcdu_session_id', newId); sessionStorage.setItem('wcdu_session_time', Date.now().toString()); } catch (e) { }
+                return newId;
+            }
+
+            function generateVisitorId() {
+                if (visitorId) return visitorId;
+                try {
+                    let stored = localStorage.getItem('wcdu_visitor_id');
+                    if (stored) { visitorId = stored; return stored; }
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    ctx.textBaseline = 'top'; ctx.font = '14px Arial'; ctx.fillText('WCDU-FP-' + navigator.language, 2, 2);
+                    const fp = canvas.toDataURL().slice(-50);
+                    const id = 'vis_' + btoa(fp + navigator.userAgent.slice(-20) + screen.width).replace(/[^a-zA-Z0-9]/g, '').substr(0, 30);
+                    localStorage.setItem('wcdu_visitor_id', id); visitorId = id; return id;
+                } catch (e) { visitorId = 'vis_fallback_' + Date.now(); return visitorId; }
+            }
+
+            function discoverFirebase() {
+                if (typeof firebase !== 'undefined') {
+                    if (firebase.apps && firebase.apps.length > 0) {
+                        const app = SETTINGS.firebaseAppName ? firebase.apps.find(a => a.name === SETTINGS.firebaseAppName) : firebase.apps[0];
+                        if (app) { try { db = app.database(); return true; } catch (e) { return false; } }
+                    }
+                    return false;
+                }
+                return false;
+            }
+
+            function initFirebase() {
+                return new Promise(function (resolve) {
+                    if (discoverFirebase()) { resolve(true); return; }
+                    let attempts = 0; const maxAttempts = Math.ceil(SETTINGS.firebaseWaitTimeout / 300);
+                    const interval = setInterval(function () {
+                        attempts++;
+                        if (discoverFirebase()) { clearInterval(interval); resolve(true); }
+                        else if (attempts >= maxAttempts) { clearInterval(interval); resolve(false); }
+                    }, 300);
+                });
+            }
+
+            function onFirebaseReady() {
+                ready = true; flushQueue();
+                if (pendingPageView) { sendPageView(pendingPageView); pendingPageView = null; }
+                if (typeof window.onWCDUAnalyticsReady === 'function') window.onWCDUAnalyticsReady();
+            }
+
+            function saveData(path, data) {
+                if (!db) {
+                    if (eventQueue.length < 100) { eventQueue.push({ path: path, data: data }); }
+                    return;
+                }
+                var retries = 0, maxRetries = 2;
+                function attemptSave() {
+                    try {
+                        db.ref(path).push(data).catch(function (err) {
+                            if (retries < maxRetries) {
+                                retries++;
+                                setTimeout(attemptSave, 1000 * retries);
+                            }
+                            log('Save error:', err.message);
+                        });
+                    } catch (e) {
+                        if (retries < maxRetries) {
+                            retries++;
+                            setTimeout(attemptSave, 1000 * retries);
+                        } else if (eventQueue.length < 100) {
+                            eventQueue.push({ path: path, data: data });
+                        }
+                    }
+                }
+                attemptSave();
+            }
+
+            function flushQueue() {
+                if (!db || eventQueue.length === 0) return;
+                var batch = eventQueue.splice(0, SETTINGS.maxBatchSize);
+                for (var i = 0; i < batch.length; i++) saveData(batch[i].path, batch[i].data);
+            }
+
+            function getDeviceInfo() {
+                var ua = navigator.userAgent;
+                var browser = 'Unknown', os = 'Unknown', deviceType = 'Desktop';
+                if (ua.includes('Firefox/')) browser = 'Firefox';
+                else if (ua.includes('Edg/')) browser = 'Edge';
+                else if (ua.includes('OPR/') || ua.includes('Opera')) browser = 'Opera';
+                else if (ua.includes('Chrome/')) browser = 'Chrome';
+                else if (ua.includes('Safari/') && !ua.includes('Chrome')) browser = 'Safari';
+                else if (ua.includes('SamsungBrowser')) browser = 'Samsung';
+                
+                if (ua.includes('Windows NT 10')) os = 'Windows 10/11';
+                else if (ua.includes('Windows')) os = 'Windows';
+                else if (ua.includes('Mac OS X')) os = 'macOS';
+                else if (ua.includes('Android')) os = 'Android';
+                else if (/iPhone|iPad|iPod/.test(ua)) os = 'iOS';
+                else if (ua.includes('Linux')) os = 'Linux';
+                
+                if (/Mobi|Android.*Mobile|iPhone|iPod/.test(ua)) deviceType = 'Mobile';
+                else if (/iPad|Android(?!.*Mobile)|Tablet/.test(ua)) deviceType = 'Tablet';
+                
+                return {
+                    browser: browser,
+                    browserVersion: (ua.match(/(?:Firefox|Chrome|Edg|Safari|Opera|OPR|SamsungBrowser)\/[\d.]+/) || [''])[0].split('/').pop() || 'Unknown',
+                    os: os, deviceType: deviceType,
+                    screenWidth: screen.width, screenHeight: screen.height,
+                    viewportWidth: window.innerWidth, viewportHeight: window.innerHeight,
+                    pixelRatio: window.devicePixelRatio || 1,
+                    touchSupport: 'ontouchstart' in window || navigator.maxTouchPoints > 0,
+                    language: navigator.language || navigator.userLanguage,
+                    cookiesEnabled: navigator.cookieEnabled,
+                    onlineStatus: navigator.onLine,
+                    hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown'
+                };
+            }
+
+            function getPageInfo() { return { url: window.location.href, pathname: window.location.pathname, hostname: window.location.hostname, title: document.title, referrer: document.referrer || 'Direct/None', referrerDomain: document.referrer ? new URL(document.referrer).hostname : 'Direct' }; }
+            function getTimestamp() { var now = new Date(); return { iso: now.toISOString(), unix: Date.now(), local: now.toLocaleString(), timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, utcOffset: now.getTimezoneOffset() }; }
+            function getPerformanceMetrics() { try { var perf = performance.getEntriesByType('navigation')[0] || {}; var resources = performance.getEntriesByType('resource'); return { dnsLookup: perf.domainLookupEnd - perf.domainLookupStart || 0, tcpConnect: perf.connectEnd - perf.connectStart || 0, ttfb: perf.responseStart - perf.requestStart || 0, domContentLoaded: perf.domContentLoadedEventEnd - perf.startTime || 0, fullPageLoad: perf.loadEventEnd - perf.startTime || 0, totalResources: resources.length, jsFiles: resources.filter(function (r) { return r.name.endsWith('.js'); }).length, cssFiles: resources.filter(function (r) { return r.name.endsWith('.css'); }).length, images: resources.filter(function (r) { return r.initiatorType === 'img' || /\.(jpg|jpeg|png|gif|webp|svg|ico)/i.test(r.name); }).length, totalTransferSize: resources.reduce(function (s, r) { return s + (r.transferSize || 0); }, 0) }; } catch (e) { return { error: e.message }; } }
+            function getNetworkInfo() { var conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection; if (!conn) return { type: 'Unknown', effectiveType: 'Unknown' }; return { type: conn.type || 'Unknown', effectiveType: conn.effectiveType || 'Unknown', downlink: conn.downlink || null, rtt: conn.rtt || null, saveData: conn.saveData || false }; }
+            function getLocationInfo() { return fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) }).then(function (r) { return r.json(); }).then(function (d) { return { ip: d.ip || 'Unknown', city: d.city || 'Unknown', region: d.region || 'Unknown', country: d.country_name || 'Unknown', countryCode: d.country_code || 'Unknown', latitude: d.latitude || null, longitude: d.longitude || null, timezone: d.timezone || 'Unknown', isp: d.org || 'Unknown' }; }).catch(function () { return { ip: 'Unknown', city: 'Unknown', region: 'Unknown', country: 'Unknown', countryCode: 'Unknown', timezone: Intl.DateTimeFormat().resolvedOptions().timeZone, isp: 'Unknown' }; }); }
+
+            function preparePageView() {
+                visitorId = generateVisitorId(); sessionId = generateSessionId();
+                return { visitorId, sessionId, device: getDeviceInfo(), page: getPageInfo(), network: getNetworkInfo(), location: { ip: 'Unknown', city: 'Unknown', country: 'Unknown', timezone: getTimestamp().timezone }, timestamp: getTimestamp(), entryType: 'pageview', isReturningVisitor: false, visitCount: 1 };
+            }
+
+            function sendPageView(pvData) {
+                try { var count = parseInt(localStorage.getItem('wcdu_visit_count') || '0') + 1; pvData.visitCount = count; pvData.isReturningVisitor = count > 1; localStorage.setItem('wcdu_visit_count', count.toString()); localStorage.setItem('wcdu_first_visit', localStorage.getItem('wcdu_first_visit') || pvData.timestamp.iso); localStorage.setItem('wcdu_last_visit', pvData.timestamp.iso); } catch (e) { }
+                saveData('Analysis/pageViews', pvData); saveData('Analysis/visitors/' + pvData.visitorId + '/visits', pvData); saveData('Analysis/sessions/' + pvData.sessionId, { pageView: pvData, sessionStart: pvData.timestamp.iso });
+            }
+
+            function trackClick(e) {
+                if (!SETTINGS.trackClicks) return; clickCount++; interactionCount++; lastActivityTime = Date.now();
+                var t = e.target; var clickData = { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), click: { x: e.clientX, y: e.clientY, scrollY: window.scrollY, target: { tag: t.tagName, id: t.id || null, className: typeof t.className === 'string' ? t.className.substring(0, 120) : null, text: t.textContent ? t.textContent.substring(0, 100).trim() : null, href: t.href || null, type: t.type || null } } };
+                if (t.href && t.href.indexOf(window.location.hostname) === -1) { externalClicks++; clickData.click.isExternal = true; clickData.click.externalUrl = t.href; saveData('Analysis/externalClicks', clickData); }
+                saveData('Analysis/clicks', clickData);
+            }
+
+            function trackScroll() {
+                if (!SETTINGS.trackScrollDepth) return; var docH = document.documentElement.scrollHeight - window.innerHeight; var pct = docH > 0 ? Math.round((window.scrollY / docH) * 100) : 0; var milestones = [25, 50, 75, 100];
+                for (var i = 0; i < milestones.length; i++) { if (pct >= milestones[i] && scrollDepths.indexOf(milestones[i]) === -1) { scrollDepths.push(milestones[i]); saveData('Analysis/scrollDepth', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), milestone: milestones[i], currentPercent: pct }); } }
+                maxScrollDepth = Math.max(maxScrollDepth, pct);
+            }
+
+            function trackError(msg, source, lineno, colno, error) { if (!SETTINGS.trackErrors) return; errorCount++; saveData('Analysis/errors', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), error: { message: String(msg).substring(0, 500), source, line: lineno, col: colno, stack: error ? error.stack : null, type: 'JS Error' } }); return false; }
+            function trackPromiseRejection(event) { errorCount++; saveData('Analysis/errors', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), error: { message: event.reason ? (event.reason.message || String(event.reason).substring(0, 500)) : 'Unknown', stack: event.reason && event.reason.stack ? event.reason.stack : null, type: 'Promise Rejection' } }); }
+            function trackResourceError(e) { var t = e.target; if (!t || t === window) return; saveData('Analysis/errors', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), error: { message: 'Failed to load resource', type: 'Resource Error', tag: t.tagName, src: t.src || t.href || 'Unknown' } }); }
+            function trackWarning(args) { if (!SETTINGS.trackWarnings) return; warningCount++; if (warningCount <= 10) saveData('Analysis/warnings', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), warning: { message: Array.prototype.slice.call(args).map(function (a) { return typeof a === 'object' ? JSON.stringify(a) : String(a); }).join(' ').substring(0, 500), type: 'Console Warning' } }); }
+            function trackFormSubmission(e) { if (!SETTINGS.trackFormSubmissions) return; formSubmissions++; var form = e.target; var fields = form.querySelectorAll('input, textarea, select'); var fieldNames = []; for (var i = 0; i < fields.length; i++) { if (fields[i].name) fieldNames.push(fields[i].name); } saveData('Analysis/formSubmissions', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), form: { id: form.id || null, action: form.action || null, method: form.method || 'GET', fieldsCount: fields.length, fieldNames, hasPassword: Array.prototype.some.call(fields, function (el) { return el.type === 'password'; }) } }); }
+            function trackPerformance() { if (!SETTINGS.trackPerformance) return; window.addEventListener('load', function () { setTimeout(function () { saveData('Analysis/performance', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), performance: getPerformanceMetrics(), network: getNetworkInfo() }); }, 1500); }); }
+            
+            function startHeartbeat() {
+                heartbeatInterval = setInterval(function () {
+                    var timeOnPage = Math.round((Date.now() - pageLoadTime) / 1000); var idleTime = Math.round((Date.now() - lastActivityTime) / 1000);
+                    saveData('Analysis/heartbeats', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), heartbeat: { timeOnPageSeconds: timeOnPage, idleTimeSeconds: idleTime, isActive: idleTime < 30, isPageVisible, scrollDepth: maxScrollDepth, clicks: clickCount, errors: errorCount, warnings: warningCount, interactions: interactionCount } });
+                    if (db) { try { db.ref('Analysis/sessions/' + sessionId).update({ lastHeartbeat: getTimestamp().iso, timeOnPageSeconds: timeOnPage, maxScrollDepth, totalClicks: clickCount, isActive: idleTime < 30 }).catch(function () { }); } catch (e) { } }
+                }, 30000);
+            }
+
+            function trackLeave() {
+                clearInterval(heartbeatInterval); clearInterval(batchInterval); flushQueue();
+                var leaveData = { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), leave: { timeOnPageSeconds: Math.round((Date.now() - pageLoadTime) / 1000), maxScrollDepth, totalClicks: clickCount, totalErrors: errorCount, totalWarnings: warningCount, formSubmissions, externalClicks, interactions: interactionCount, scrollMilestones: scrollDepths } };
+                saveData('Analysis/leaves', leaveData);
+                if (db) { try { db.ref('Analysis/sessions/' + sessionId).update({ sessionEnd: getTimestamp().iso, durationSeconds: leaveData.leave.timeOnPageSeconds, finalScrollDepth: maxScrollDepth, endedNaturally: true }).catch(function () { }); } catch (e) { } }
+            }
+
+            function trackVisibility() { document.addEventListener('visibilitychange', function () { isPageVisible = !document.hidden; saveData('Analysis/visibility', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), visible: isPageVisible }); }); }
+            function trackInteraction() { interactionCount++; lastActivityTime = Date.now(); }
+            var resizeTimeout; function trackResize() { clearTimeout(resizeTimeout); resizeTimeout = setTimeout(function () { saveData('Analysis/resizes', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), resize: { width: window.innerWidth, height: window.innerHeight, orientation: window.innerWidth > window.innerHeight ? 'landscape' : 'portrait' } }); }, 500); }
+            function throttle(func, limit) { var inThrottle = false; return function () { var args = arguments; var ctx = this; if (!inThrottle) { func.apply(ctx, args); inThrottle = true; setTimeout(function () { inThrottle = false; }, limit); } }; }
+
+            window.WCDUAnalytics = {
+                trackEvent: function (eventName, data) { saveData('Analysis/customEvents', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), event: { name: eventName, data: data || {} } }); },
+                trackConversion: function (name, value) { saveData('Analysis/conversions', { sessionId, visitorId, timestamp: getTimestamp(), page: getPageInfo(), conversion: { name, value: value || 0 } }); },
+                trackUser: function (userId, userData) { saveData('Analysis/identifiedUsers/' + userId, { visitorId, sessionId, timestamp: getTimestamp(), userData: userData || {} }); },
+                getSessionId: function () { return sessionId; }, getVisitorId: function () { return visitorId; }, isReady: function () { return ready; },
+                getMetrics: function () { return { sessionId, visitorId, timeOnPage: Math.round((Date.now() - pageLoadTime) / 1000), scrollDepth: maxScrollDepth, clicks: clickCount, errors: errorCount, warnings: warningCount, interactions: interactionCount, ready }; }
+            };
+
+            function init() {
+                pendingPageView = preparePageView();
+                document.addEventListener('click', trackClick, true); document.addEventListener('scroll', throttle(trackScroll, 200), { passive: true }); document.addEventListener('mousemove', throttle(trackInteraction, 5000), { passive: true }); document.addEventListener('keydown', throttle(trackInteraction, 5000), { passive: true }); document.addEventListener('touchstart', throttle(trackInteraction, 5000), { passive: true }); document.addEventListener('submit', trackFormSubmission, true); window.addEventListener('resize', throttle(trackResize, 1000), { passive: true }); window.addEventListener('error', trackError, true); window.addEventListener('unhandledrejection', trackPromiseRejection); window.addEventListener('beforeunload', trackLeave); document.addEventListener('error', trackResourceError, true);
+                trackVisibility(); trackPerformance();
+                var origWarn = console.warn; console.warn = function () { trackWarning(arguments); origWarn.apply(console, arguments); };
+                startHeartbeat(); batchInterval = setInterval(flushQueue, SETTINGS.batchInterval);
+                initFirebase().then(function (success) { if (success) onFirebaseReady(); });
+                if (SETTINGS.trackLocation) { getLocationInfo().then(function (loc) { if (pendingPageView) pendingPageView.location = loc; saveData('Analysis/locations/' + visitorId, { location: loc, lastSeen: getTimestamp().iso, sessionId }); }); }
+            }
+
+            if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+            else init();
+        })();
+    </script>
+
+    <!-- ============ PREMIUM POP-OUT AD CARD (PRESERVED) ============ -->
+    <div id="maria-ad-popup" class="maria-popup-overlay"></div>
+    <div id="maria-banner-container" class="maria-banner-container"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const TARGET_PLACEMENT = 'placement_homepage';
+            const API_BASE_URL = 'https://maria-ads-backend-production.up.railway.app';
+            
+            let popupInitialized = false;
+            let observer = null;
+            let currentAdData = null;
+
+            console.log('[Maria Ads] Popup initialized');
+
+            const popupContainer = document.getElementById('maria-ad-popup');
+            const bannerContainer = document.getElementById('maria-banner-container');
+
+            initializePopup();
+
+            function initializePopup() {
+                const targetPlacement = findTargetPlacement();
+                if (!targetPlacement) return;
+
+                const existingAd = findExistingAd(targetPlacement);
+                if (existingAd) {
+                    console.log('[Maria Ads] Ad detected immediately:', existingAd);
+                    handleAdDetected(existingAd);
+                } else {
+                    observeForAd(targetPlacement);
+                }
+            }
+
+            function findTargetPlacement() {
+                const placement = document.querySelector(`.maria-ad[data-placement="${TARGET_PLACEMENT}"]`);
+                if (!placement) {
+                    console.warn('[Maria Ads] Popup placement not found:', TARGET_PLACEMENT);
+                }
+                return placement;
+            }
+
+            function findExistingAd(placement) {
+                return placement.querySelector('.maria-ad-inner');
+            }
+
+            function observeForAd(placement) {
+                console.log('[Maria Ads] Waiting for ad...');
+                observer = new MutationObserver((mutations) => {
+                    for (const mutation of mutations) {
+                        if (mutation.addedNodes.length > 0) {
+                            const adInner = findExistingAd(placement);
+                            if (adInner) {
+                                console.log('[Maria Ads] Ad detected via observer:', adInner);
+                                handleAdDetected(adInner);
+                                cleanupObserver();
+                                return;
+                            }
+                        }
+                    }
+                });
+                observer.observe(placement, { childList: true, subtree: true });
+            }
+
+            function cleanupObserver() {
+                if (observer) {
+                    observer.disconnect();
+                    observer = null;
+                }
+            }
+
+            function handleAdDetected(adInner) {
+                if (popupInitialized) return;
+                popupInitialized = true;
+
+                currentAdData = extractAdData(adInner);
+                
+                const targetPlacement = findTargetPlacement();
+                if (targetPlacement) {
+                    targetPlacement.style.display = 'none';
+                }
+                
+                renderPopupAd(currentAdData);
+                renderBannerAd(currentAdData);
+                showPopup();
+            }
+
+            function extractAdData(adInner) {
+                const data = {
+                    destinationUrl: adInner.getAttribute('data-destination-url') || adInner.getAttribute('href'),
+                    title: adInner.getAttribute('data-title') || adInner.getAttribute('data-brand-name'),
+                    description: adInner.getAttribute('data-description'),
+                    imageUrl: adInner.getAttribute('data-image-url') || adInner.getAttribute('data-brand-logo'),
+                    videoUrl: adInner.getAttribute('data-video-url'),
+                    clickToken: adInner.getAttribute('data-click-token'),
+                    trackingToken: adInner.getAttribute('data-tracking-token')
+                };
+
+                if (!data.imageUrl) {
+                    const img = adInner.querySelector('img');
+                    if (img) data.imageUrl = img.src;
+                }
+                if (!data.videoUrl) {
+                    const video = adInner.querySelector('video');
+                    if (video) {
+                        data.videoUrl = video.src;
+                        if (!data.imageUrl && video.poster) data.imageUrl = video.poster;
+                    }
+                }
+                if (!data.title) {
+                    const titleEl = adInner.querySelector('h4, .ad-title');
+                    if (titleEl) data.title = titleEl.innerText;
+                }
+                if (!data.description) {
+                    const descEl = adInner.querySelector('p, .ad-desc');
+                    if (descEl) data.description = descEl.innerText;
+                }
+
+                return data;
+            }
+
+            async function recordImpression(token) {
+                if (!token) return;
+                try {
+                    await fetch(`${API_BASE_URL}/api/recordImpression`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ trackingToken: token })
+                    });
+                    console.log('[Maria Ads] Impression recorded for:', token);
+                } catch (e) {
+                    console.error('[Maria Ads] Impression error:', e);
+                }
+            }
+
+            async function recordClick(token) {
+                if (!token) return;
+                try {
+                    await fetch(`${API_BASE_URL}/api/recordClick`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ clickToken: token })
+                    });
+                    console.log('[Maria Ads] Click recorded for:', token);
+                } catch (e) {
+                    console.error('[Maria Ads] Click error:', e);
+                }
+            }
+
+            function handleAdClick(e, url, token) {
+                e.preventDefault();
+                recordClick(token).finally(() => {
+                    if (validateDestinationUrl(url)) {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                    }
+                });
+            }
+
+            function renderPopupAd(adData) {
+                if (!validateDestinationUrl(adData.destinationUrl)) {
+                    console.warn('[Maria Ads] Invalid or missing destination URL.');
+                    return;
+                }
+
+                let mediaHtml = '';
+                if (adData.videoUrl) {
+                    mediaHtml = `<video src="${escapeHtml(adData.videoUrl)}" autoplay muted loop playsinline controls style="width: 100%; max-height: 350px; object-fit: contain; display: block; border-radius: 8px; margin-bottom: 12px; background: #f1f5f9;"></video>`;
+                } else if (adData.imageUrl) {
+                    mediaHtml = `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" onerror="this.style.display='none'">`;
+                }
+
+                const html = `
+                    <div class="maria-popup-header">
+                        <span class="maria-popup-sponsor">Sponsored by Maria Ads</span>
+                        <button class="maria-popup-close" id="maria-close-btn" aria-label="Close ad">&times;</button>
+                    </div>
+                    <div class="maria-popup-body">
+                        ${mediaHtml}
+                        ${adData.title ? `<h4>${escapeHtml(adData.title)}</h4>` : ''}
+                        ${adData.description ? `<p>${escapeHtml(adData.description)}</p>` : ''}
+                    </div>
+                    <div class="maria-popup-footer">
+                        <button class="maria-btn maria-btn-visit" id="maria-visit-btn">Visit Site</button>
+                        <a href="https://ads.smmaria.site" target="_blank" rel="noopener noreferrer" class="maria-btn maria-btn-create">Create Ad</a>
+                    </div>
+                `;
+                
+                popupContainer.innerHTML = html;
+                
+                const closeBtn = document.getElementById('maria-close-btn');
+                if (closeBtn) {
+                    closeBtn.addEventListener('click', hidePopup);
+                }
+
+                const visitBtn = document.getElementById('maria-visit-btn');
+                if (visitBtn) {
+                    visitBtn.addEventListener('click', (e) => handleAdClick(e, adData.destinationUrl, adData.clickToken));
+                }
+            }
+
+            function showPopup() {
+                setTimeout(() => {
+                    popupContainer.classList.add('show');
+                    console.log('[Maria Ads] Large popup displayed');
+                    
+                    const videoEl = popupContainer.querySelector('video');
+                    if (videoEl) {
+                        videoEl.play().catch(e => console.warn('[Maria Ads] Autoplay prevented by browser:', e));
+                    }
+
+                    if (currentAdData && currentAdData.trackingToken) {
+                        recordImpression(currentAdData.trackingToken);
+                    }
+                }, 1000);
+            }
+
+            function hidePopup() {
+                popupContainer.classList.remove('show');
+                console.log('[Maria Ads] Large popup dismissed, showing banner...');
+                
+                setTimeout(() => {
+                    showBanner();
+                }, 500);
+            }
+
+            function renderBannerAd(adData) {
+                if (!validateDestinationUrl(adData.destinationUrl)) return;
+
+                const html = `
+                    <div class="maria-banner" id="maria-banner-link">
+                        ${adData.imageUrl ? `<img src="${escapeHtml(adData.imageUrl)}" alt="${escapeHtml(adData.title || 'Advertisement')}" class="maria-banner-logo" onerror="this.style.display='none'">` : ''}
+                        <div class="maria-banner-content">
+                            <div class="maria-banner-title">${escapeHtml(adData.title || 'Sponsored')}</div>
+                            <div class="maria-banner-desc">${escapeHtml(adData.description || 'Click to learn more')}</div>
+                        </div>
+                        <div class="maria-banner-cta">View</div>
+                    </div>
+                `;
+                bannerContainer.innerHTML = html;
+
+                const bannerLink = document.getElementById('maria-banner-link');
+                if (bannerLink) {
+                    bannerLink.addEventListener('click', (e) => handleAdClick(e, adData.destinationUrl, adData.clickToken));
+                }
+            }
+
+            function showBanner() {
+                bannerContainer.classList.add('show');
+                console.log('[Maria Ads] Banner displayed');
+            }
+
+            function validateDestinationUrl(url) {
+                if (!url) return false;
+                try {
+                    const parsed = new URL(url);
+                    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function escapeHtml(str) {
+                if (!str) return '';
+                const div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+        });
+    </script>
+</body>
+</html>
